@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>edit patient</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+<form id="base-form" class="form" th:action="@{addSchedule}" method="post">
+    <div>th:replace="header"</div>
+    <input type="hidden" name="command" value="add_schedule" />
+    <input type="hidden" name="path_return" value="${path_return}" />
+    <input type="hidden" name="id" value="${id}" />
+    <div id="base">
+        <h3 class="text-center text-white pt-5">th:text="#{hospital}"</h3>
+        <div class="container">
+            <div id="base-row" class="row justify-content-center align-items-center">
+                <div id="base-column" class="col-md-6">
+                    <div id="base-box" class="col-md-12">
+                        <br/>
+                        <h3 class="text-center text-info">th:text="#{add_visit}"</h3>
+                        <br/>
+                        <select th:field="*{doctor.id}" class="form-control" name="doctor_id" id="doctors">
+                            <option value="">th:text="#{select_doctor}"...</option>
+                            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+                        </select>
+                        <br>
+                        <select th:field="*{patient.id}" class="form-control" name="patient_id" id="patients">
+                            <option value="">th:text="#{select_patient}"...</option>
+                            <option th:each="patient : ${patients}" th:value="${patients.id}" th:text="${patients.name}"></option>
+                        </select>
+                        <div class="form-group">
+                            <label for="visit_time" class="text-info">th:text="#{visit_time}":</label><br>
+                            <input type="datetime-local" name="visit_time" id="visit_time" class="form-control" value="${visit_time}">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit" class="btn btn-info btn-md" value="<fmt:message key='save'/>">
+                            <label class="text-danger"><em><strong>th:value="${message}"</strong></em></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

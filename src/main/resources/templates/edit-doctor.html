@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>edit doctor</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<form id="base-form" class="form" action="/hospitalSpring/doctors/${command}" th:object="${doctor}" method="post">
+    <input type="hidden" name="command" value="edit_doctor"/>
+    <input type="hidden" name="id" value="${id}"/>
+    <div th:insert="header"></div>
+    <div id="base2">
+        <h3 class="text-center text-white" th:text="#{hospital}">
+        </h3>
+        <div class="container">
+            <div id="base-row" class="row justify-content-center align-items-center">
+                <div id="base-column" class="col-md-6">
+                    <div id="base-box" class="col-md-12">
+                        <br/>
+                        <h3 class="text-center text-info" th:text="#{Doctor}">
+                        </h3>
+                        <div class="form-group">
+                            <label class="text-info" th:text="#{last_name}">:</label><br>
+                            <input type="text" name="last_name" id="last_name" class="form-control"
+                                   th:value="${doctor.getLastName()}">
+                            <label class="text-info" th:text="#{first_name}"> :</label><br>
+                            <input type="text" name="first_name" id="first_name" class="form-control"
+                                   th:value="${doctor.getFirstName()}">
+                            <label for="login" class="text-info" th:text="#{login}">:</label><br>
+                            <input type="login" name="login" id="login" class="form-control"
+                                   th:value="${doctor.getLogin()}"/>
+                            <label for="password" class="text-info" th:text="#{password}">:</label><br>
+                            <input type="password" name="password" id="password" class="form-control"
+                                   value="${password}"/>
+                            <br/>
+                            <input type="radio" name="role" value="ADMIN" th:checked="${doctor.getRole().toString() eq 'ADMIN'}" th:text="#{admin}"/>
+                            <input type="radio" name="role" value="DOCTOR" th:checked="${doctor.getRole().toString() eq 'DOCTOR'}" th:text="#{doctor}"/>
+                            <input type="radio" name="role" value="NURSE" th:checked="${doctor.getRole().toString() eq 'NURSE'}" th:text="#{nurse}"/>
+                        </div>
+                        <select class="form-control" name="category_id" id="categories">
+                            <option value="" th:text="#{select_category}">...</option>
+                            <option th:each="category : ${categories}" th:value="${category.getId()}" th:selected="${doctor.getCategory()!=null&&category.getId() eq doctor.getCategory().getId()}" th:text="${category.getName()}"></option>
+                        </select>
+                        <div class="form-group">
+                            <br/>
+                            <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>
+                          <label class="text-danger"><em><strong th:text="${message}"></strong></em></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

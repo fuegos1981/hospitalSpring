@@ -20,6 +20,10 @@ public class CategoryService implements GlobalService<Category> {
     private CategoryRepository categoryRepository;
     private DoctorService doctorService;
 
+    public CategoryService(CategoryRepository categoryRepository, DoctorService doctorService) {
+        this.categoryRepository = categoryRepository;
+        this.doctorService = doctorService;
+    }
 
     @Override
     public Category create(Category category){

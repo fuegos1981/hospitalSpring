@@ -56,7 +56,7 @@ public class PatientController {
     public String update(@PathVariable("patient_id") int patientId, Model model,
                          @Validated @ModelAttribute("patient")Patient patient, BindingResult result) throws DBException {
         if (result.hasErrors()) {
-            model.addAttribute("priorities", Gender.values());
+            model.addAttribute("genders", Gender.values());
             return "edit-patient";
         }
         patientService.update(patient);
