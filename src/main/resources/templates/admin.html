@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+<form id="base-form" class="form" th:action="@{/hospitalSpring/admin}" method="get">
+    <div th:insert="header"></div>
+    <input type="hidden" name="command" value="admin" />
+    <div id="base1">
+        <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
+        <div class="container">
+            <div class="row">
+                <div class="table-responsive col-md-6">
+                    <div class="form-group">
+                        <br>
+                        <a class="btn btn-info btn-md" href="/hospitalSpring/patients/create" th:text="#{create_patient}"></a>
+                    </div>
+                    <div class="form-group">
+                        <input id = "sub" type="submit" name="submit" class="btn btn-info btn-md" value="sort">
+                        <input type="radio" name="sortPatient" th:value="'NAME_ASC'" onClick="clickSubmit()" th:checked="${sortPatient eq 'NAME_ASC'}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortPatient" th:value="'NAME_DESC'" onClick="clickSubmit()"  th:checked="${sortPatient eq 'NAME_DESC'}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortPatient" th:value="'BIRTHDAY_ASC'" onClick="clickSubmit()"  th:checked="${sortPatient eq  'BIRTHDAY_ASC'}"/><span class="dirrect" th:text="#{birthday}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortPatient" th:value="'BIRTHDAY_DESC'" onClick="clickSubmit()"  th:checked="${sortPatient eq 'BIRTHDAY_DESC'}"/><span class="dirrect" th:text="#{birthday}"></span><span class="dirrect"> 🠕</span>
+                    </div>
+                    <table id = "AllPatients" class="table table-bordered table-hover table-striped">
+                        <tr>
+                            <th th:text="#{num}"></th>
+                            <th th:text="#{Name}"></th>
+                            <th th:text="#{Birthday}"></th>
+                            <th colspan ="2"></th>
+                        </tr>
+                            <tr th:each="patient, status : ${patients}">
+                                <td th:text="${status.count+maxCountOnPage*(current_page_patient-1)}"></td>
+                                <td th:text="${patient.toString()}"></td>
+                                <td th:text="${{patient.getBirthdayString()}}"></td>
+                                <td><a href ="/hospitalSpring/patients/update/${patient.getId()}" th:text="#{read}"></a></td>
+                                <td><a href ="/hospitalSpring/addSchedule?patient_id=${patient.getId()}&command=add_schedule&from=admin" th:text="#{visit}"></a></td>
+                            </tr>
+                    </table>
+                    <div data-th-utext="*{pg_patient}"></div>
+                </div>
+                <div class="table-responsive  col-md-6">
+                    <div class="form-group">
+                        <br>
+                        <a class="btn btn-info btn-md" href="/hospitalSpring/editDoctor?command=edit_doctor" th:text="#{create_doctor}"></a>
+                        <a class="btn btn-info btn-md" href="/hospitalSpring/simple?command=simple" th:text="#{Update_catalog}"></a>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_ASC" th:text="${sortDoctor=='NAME_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_DESC" th:text="${sortDoctor=='NAME_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_ASC" th:text="${sortDoctor=='CATEGORY_ASC' ? 'checked':''}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_DESC" th:text="${sortDoctor=='CATEGORY_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_ASC" th:text="${sortDoctor=='COUNT_PATIENT_ASC' ? 'checked':''}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_DESC" th:text="${sortDoctor=='COUNT_PATIENT_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠕</span>
+                    </div>
+                    <table id = "AllDoctors" class="table table-bordered table-hover table-striped">
+                        <tr>
+                            <th th:text="#{num}"></th>
+                            <th th:text="#{Name}"></th>
+                            <th th:text="#{Category}"></th>
+                            <th colspan ="3" th:text="#{operation}"></th>
+                        </tr>
+                        <tr th:each="doctor, status : ${doctors}">
+                            <td th:text="${status.count+maxCountOnPage*(current_page_doctor-1)}"></td>
+                            <td th:text="${''+doctor.getLastName()+' '+doctor.getFirstName()}"></td>
+                            <td th:text="${doctor.getCategory()}">/td>
+                            <td><a href ="/hospitalSpring/medic?command=medic&doctor_id=${doctor.getId()}" th:text="#{read}"></a></td>
+                            <td><a href ="/hospitalSpring/editDoctor?command=edit_doctor&id=${doctor.getId()}&isFirst=true" th:text="#{edit}"></a></td>
+                            <td><a href ="/hospitalSpring/addSchedule?doctor_id=${doctor.getId()}&name=${doctor.toString()}&command=add_schedule&from=admin" th:text="#{visit}"></a></td>
+                        </tr>
+
+                    </table>
+                    <div data-th-utext="*{pg_doctor}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script type="text/javascript" th:src="@{/main.js}"></script>
+</html>

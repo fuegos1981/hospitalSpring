@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+<form id="base-form" class="form" action="Simple" method="post">
+    <div>th:replace="header"</div>
+    <input type="hidden" name="command" value="simple" />
+    <input id = "sub" type="submit" name="submit" class="btn btn-info btn-md" value="sub">
+    <div id="base1">
+        <h3 class="text-center text-white pt-5">th:text="#{hospital}"</h3>
+        <div class="container">
+            <div class="row">
+                <div class="table-responsive col-md-6">
+                    <div class="form-group">
+                        <br>
+                        <h3>th:text="#{Category}"</h3>
+                        <a class="btn btn-info btn-md" href="/hospital/editSimple?command=edit_simple&name=Category">th:text="#{add}"</a>
+                    </div>
+                    <table id = "AllCategories" class="table table-bordered table-hover table-striped">
+                        <tr>
+                            <th>th:text="#{num}"</th>
+                            <th>th:text="#{Name}"</th>
+                            <th colspan ="2">th:text="#{operation}"</th>
+                        </tr>
+                            <tr th:each="category, status : ${categories}">
+                                <td> th:text="${status.count+maxCountOnPage*(current_page_category-1)}" </td>
+                                <td>th:text="${category.toString()}"</td>
+                                <td><a href ="/hospital/editSimple?command=edit_simple&name=Category&id=${category.getId()}&simple=${category.toString()}">th:text="#{edit}"</a></td>
+                                <td><a href ="/hospital/editSimple?command=delete_simple&name=Category&id=${category.getId()}">th:text="#{delete}"</a></td>
+                            </tr>
+                    </table>
+                    th:text="${pg_category}"
+                </div>
+                <div class="table-responsive  col-md-6">
+                    <div class="form-group">
+                        <br>
+                        <h3>th:text="#{Diagnosis}"</h3>
+                        <a class="btn btn-info btn-md" href="/hospital/editSimple?command=edit_simple&name=Diagnosis">th:text="#{add}"</a>
+                    </div>
+                    <table id = "AllDiagnosis" class="table table-bordered table-hover table-striped">
+                        <tr>
+                            <th>th:text="#{num}"</th>
+                            <th>th:text="#{Name}"</th>
+                            <th colspan ="2"></th>
+                        </tr>
+                            <tr th:each="diagnosis, status : ${diagnosises}">
+                                <td>th:text="${status.count+maxCountOnPage*(current_page_diagnosis-1)}"</td>
+                                <td>th:text="${diagnosis.toString()}"</td>
+                                <td><a href ="/hospital/editSimple?command=edit_simple&name=Diagnosis&id=${diagnosis.getId()}&simple=${diagnosis.toString()}">th:text="#{edit}"</a></td>
+                                <td><a href ="/hospital/editSimple?command=delete_simple&name=Diagnosis&id=${diagnosis.getId()}">th:text="#{delete}"</a></td>
+                            </tr>
+                    </table>
+                    th:text="${pg_diagnosis}"
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+<script type="text/javascript" th:src="@{/main.js}"></script>
+</html>

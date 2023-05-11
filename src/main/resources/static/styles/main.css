@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #17a2b8;
+  height: 100vh;
+}
+#base .container #base-row #base-column #base-box
+{
+  margin-top: 60px;
+  max-width: 600px;
+  height: 320px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+
+#base2 .container #base-row #base-column #base-box
+{
+  margin-top: 60px;
+  max-width: 600px;
+  height: 550px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+.dirrect{
+font-weight: bold;
+}
+#base1 {
+display: flex;
+flex-flow: column nowrap;
+}
+
+#base1 .container {
+flex-grow: 1;
+margin-bottom: 30px;
+}
+
+#base1 .container .row
+{
+  margin-top: 30px;
+  max-width: 1800px;
+  min-height: 800px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#base3 .container .row
+{
+  margin-top: 30px;
+  max-width: 1200px;
+  min-height: 500px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+
+#sub{
+    display: none;
+}
+
+#base1 .container .row-patient
+{
+    align-content: flex-start;
+}
+
+
+#base-edit-patient .container #base-row #base-column #base-box
+{
+  margin-top: 60px;
+  max-width: 1200px;
+  height: 470px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+#base .container #base-row #base-column #base-box #base-form {
+  padding: 20px;
+}
+#base .container #base-row #base-column #base-box #base-form #register-link {
+  margin-top: -85px;
+}

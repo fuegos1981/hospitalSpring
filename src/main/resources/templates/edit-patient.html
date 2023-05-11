@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>edit patient</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    </head>
+    <body>
+        <form id="base-form" class="form" th:action="@{/hospitalSpring/patients/${command}}" th:object="${patient}" method="post">
+            <input type="hidden" name="command" value="edit_patient" />
+            <input type="hidden" name="id" value="${id}" />
+            <div th:insert="header"></div>
+            <div id="base-edit-patient">
+                <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
+                <div class="container">
+                    <div id="base-row" class="row justify-content-center align-items-center">
+                        <div id="base-column" class="col-md-6">
+                            <div id="base-box" class="col-md-12">
+                                <br/>
+                                <h3 class="text-center text-info" th:text="#{patient}"></h3>
+                                <div class="form-group">
+                                    <label class="text-info" th:text="#{last_name}">:</label><br>
+                                    <input type="text" name="last_name" id="last_name" class="form-control" th:value="${patient.getLastName()}"/>
+                                    <label class="text-info" th:text="#{first_name}">:</label><br>
+                                    <input type="text" name="first_name" id="first_name" class="form-control" th:value="${patient.getFirstName()}"/>
+                                    <label for="email" class="text-info" th:text="#{Email}">:</label><br>
+                                    <input type="email" name="email" id="email" class="form-control" th:value="${patient.getEmail()}"/>
+                                    <label for="birthday" class="text-info" th:text="#{birthday}">:</label><br>
+                                    <input type="date" name="birthday" id="birthday" class="form-control" lang ="${locale}" th:value="${birthday}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="radio" name="gender"  value="MALE" th:checked="${patient.getGender().toString() eq 'MALE'}" th:text="#{male}"/>
+                                    <input type="radio" name="gender"  value="FEMALE" th:checked="${patient.getGender().toString() eq 'FEMALE'}" th:text="#{female}"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>
+                                    <label class="text-danger"><em><strong th:text="${message}"></strong></em></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
