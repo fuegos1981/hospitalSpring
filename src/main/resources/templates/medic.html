@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient info</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link th:href="@{/styles/main.css}" rel="stylesheet" />
+</head>
+<body>
+
+<form id="base-form" class="form" method="get">
+  <div th:insert="header"></div>
+  <input id = "sub" type="submit" name="submit" class="btn btn-info btn-md" value="sub">
+  <div id="base1">
+    <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
+    <div class="container">
+      <div class="row row-patient">
+        <div id ="patient_table_info" class="col-md-12">
+          <table class="table table-bordered table-hover table-striped">
+            <tr>
+              <th th:text="#{Doctor}"></th>
+              <th th:text="#{patient}"></th>
+              <th th:text="#{operation}"></th>
+            </tr>
+            <tr>
+              <td>
+                <select class="form-control" name="doctor_id" id="doctors"  onchange="clickSubmit(${doctor.getId()})">
+                  <option value="" th:text="#{select_doctor}">...</option>
+                  <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId()==doctor_id}" th:text="${doctor.toString()}"></option>
+                </select>
+              </td>
+              <td>
+                <select class="form-control" name="patient_id" id="patients" onchange="clickSubmit(${patient.getId()})">
+                  <option value="" th:text="#{select_patient}">...</option>
+                  <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() ==patient_id}" th:text="${patient.toString()}"></option>
+                </select>
+              </td>
+              <td>
+                <span th:if="${patient_id eq ''}">
+                  <a th:href="@{|/hospitalSpring/patients/read/${patient.getId()}|}" th:text="#{read}"/>
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-responsive col-md-6">
+          <div class="form-group">
+            <br>
+            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create|}" th:text="#{add_visit}"></a>
+          </div>
+          <table id = "AllSchedule" class="table table-bordered table-hover table-striped">
+            <tr>
+              <th th:text="#{num}"></th>
+              <th th:text="#{Name}"></th>
+              <th th:text="#{visit}"></th>
+              <th colspan ="2" th:text="#{operation}"></th>
+            </tr>
+
+              <tr th:each="schedule, status : ${schedules}">
+                <td th:text="${status.count+maxCountOnPage*(current_page_schedule-1)}"></td>
+                <td th:text="${schedule.getPatientName()}"></td>
+                <td th:text="${schedule.getDateVisitString()}"></td>
+                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}|}" th:text="#{edit}"/></td>
+                <td><a  th:href="@{|/hospitalSpring/schedules/delete/${schedule.getId()}|}" th:text="#{delete}"/></td>
+              </tr>
+
+          </table>
+          <div data-th-utext="*{pg_schedule}"></div>
+        </div>
+        <div class="table-responsive  col-md-6">
+          <div class="form-group">
+            <br>
+            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/appointments/create|}" th:text="#{create_appointment}"></a>
+          </div>
+          <table id = "AllAppointments" class="table table-bordered table-hover table-striped">
+            <tr>
+              <th th:text="#{num}"></th>
+              <th th:text="#{date}"></th>
+              <th th:text="#{Doctor}"></th>
+              <th th:text="#{patient}"></th>
+              <th th:text="#{diagnosis}"></th>
+              <th colspan ="1" th:text="#{operation}"></th>
+            </tr>
+
+              <tr th:each="appointment, status : ${appointments}">
+                <td th:text="${status.count+maxCountOnPage*(current_page_appointment-1)}"></td>
+                <td th:text="${appointment.getDateCreateString()}"></td>
+                <td th:text="${appointment.getDoctorName()}"></td>
+                <td th:text="${appointment.getPatientName()}"></td>
+                <td th:text="${appointment.getDiagnosisName()}"></td>
+                <td><a th:href="@{|/hospitalSpring/appointments/update/${appointment.getId()}|}" th:text="#{edit}"/></td>
+              </tr>
+          </table>
+          <div data-th-utext="*{pg_appointment}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</body>
+<script type="text/javascript" th:src="@{/main.js}"></script>
+</html>

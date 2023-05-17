@@ -36,17 +36,19 @@ public class MainController {
     @RequestMapping(value="/hospitalSpring/admin", method=RequestMethod.GET)
     public String admin(@RequestParam Map<String,String> allParams, Model model) throws DBException, SQLException {
         model.addAttribute("patients",patientService.getAll());
-        String pag_d = new PaginationTag("doctor",3,6).doTag();
-        model.addAttribute("pg_doctor",pag_d);
+        model.addAttribute("pg_patient",new PaginationTag("patient",2,5).doTag());
+        model.addAttribute("current_page_patient",1);
+
         model.addAttribute("doctors",doctorService.getAll());
-        model.addAttribute("pg_patient",new PaginationTag("doctor",2,5).doTag());
+        model.addAttribute("pg_doctor",new PaginationTag("doctor",3,6).doTag());
+        model.addAttribute("current_page_doctor",1);
         //allParams.keySet().forEach(x-> logger.info("x="+x+"v="+allParams.get(x)));
         //logger.info(pag_d);
         model.addAttribute("maxCountOnPage",10);
-        model.addAttribute("current_page_patient",1);
-        model.addAttribute("current_page_doctor",1);
+
         return "admin";
     }
+
 
 /*
     protected void processRequest(Model model){

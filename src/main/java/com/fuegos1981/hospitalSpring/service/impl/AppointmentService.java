@@ -1,47 +1,52 @@
 package com.fuegos1981.hospitalSpring.service.impl;
 
 
-import com.fuegos1981.hospitalSpring.model.Appointment;
+import com.fuegos1981.hospitalSpring.dto.AppointmentDto;
+import com.fuegos1981.hospitalSpring.exception.DBException;
+import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.AppointmentRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
+import com.fuegos1981.hospitalSpring.service.MappingUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class AppointmentService implements GlobalService<Appointment> {
+public class AppointmentService implements GlobalService<AppointmentDto> {
     private AppointmentRepository appointmentRepository;
-    //private final MappingUtils mappingUtils;
+    private MappingUtils mappingUtils;
 
-    private AppointmentService(AppointmentRepository appointmentRepository) {
+    private AppointmentService(AppointmentRepository appointmentRepository, MappingUtils mappingUtils) {
         this.appointmentRepository = appointmentRepository;
+        this.mappingUtils = mappingUtils;
     }
 
 
     @Override
-    public Appointment readById(Integer id) throws SQLException{
-       return appointmentRepository.findById(id).get();
+    public AppointmentDto readById(Integer id) throws SQLException{
+        return mappingUtils.mapToAppointmentDto(appointmentRepository.findById(id).get());
     }
 
     @Override
-    public Appointment create(Appointment appointment) throws SQLException {
-        return appointmentRepository.save(appointment);
+    public AppointmentDto create(AppointmentDto appointmentDto) throws SQLException, DBException {
+        return mappingUtils.mapToAppointmentDto(appointmentRepository.save(mappingUtils.mapToAppointment(appointmentDto)));
     }
 
     @Override
-    public Appointment update(Appointment appointment) throws SQLException {
-        return appointmentRepository.save(appointment);
+    public AppointmentDto update(AppointmentDto appointmentDto) throws SQLException, DBException {
+        return mappingUtils.mapToAppointmentDto(appointmentRepository.save(mappingUtils.mapToAppointment(appointmentDto)));
     }
 
     @Override
-    public void delete(Appointment appointment) throws SQLException {
-        appointmentRepository.delete(appointment);
+    public void delete(AppointmentDto appointmentDto) throws SQLException, DBException {
+        appointmentRepository.delete(mappingUtils.mapToAppointment(appointmentDto));
     }
 
     @Override
-    public List<Appointment> getAll(QueryRedactor qr) throws  SQLException {
+    public List<AppointmentDto> getAll(QueryRedactor qr) throws  SQLException {
         return null;
     }
 
@@ -51,8 +56,10 @@ public class AppointmentService implements GlobalService<Appointment> {
     }
 
     @Override
-    public List<Appointment> getAll() throws SQLException {
-        return appointmentRepository.findAll();
+    public List<AppointmentDto> getAll() throws SQLException {
+        return appointmentRepository.findAll().stream()
+                .map(mappingUtils::mapToAppointmentDto)
+                .collect(Collectors.toList());
     }
 
     @Override

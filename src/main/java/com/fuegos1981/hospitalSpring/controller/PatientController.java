@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/hospitalSpring/patients")
@@ -35,9 +36,11 @@ public class PatientController {
 
     @PostMapping("/create")
     public String create(Model model,
-                         @Validated @ModelAttribute("patient") Patient patient, BindingResult result) throws DBException {
+                         @Validated @ModelAttribute("patient") Patient patient, BindingResult result) throws DBException, SQLException {
+
         if (result.hasErrors()) {
-            //model.addAttribute("genders", Gender.values());
+            logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!create post patient");
+            logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
             return "edit-patient";
         }
         patientService.create(patient);
@@ -61,6 +64,14 @@ public class PatientController {
         }
         patientService.update(patient);
         return "redirect:/hospitalSpring/admin";
+    }
+
+    @GetMapping("/read/{patient_id}")
+    public String read(@PathVariable("patient_id") int patientId,Model model) throws DBException, SQLException {
+        Patient patient = patientService.readById(patientId);
+        model.addAttribute("patient", patient);
+
+        return "patient-info";
     }
 
 }

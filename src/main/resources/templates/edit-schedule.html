@@ -9,36 +9,35 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 <body>
-<form id="base-form" class="form" th:action="@{addSchedule}" method="post">
-    <div>th:replace="header"</div>
-    <input type="hidden" name="command" value="add_schedule" />
-    <input type="hidden" name="path_return" value="${path_return}" />
-    <input type="hidden" name="id" value="${id}" />
+<form id="base-form" class="form" th:object="${schedule}" method="post">
+    <div th:insert="header"></div>
     <div id="base">
-        <h3 class="text-center text-white pt-5">th:text="#{hospital}"</h3>
+        <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">
             <div id="base-row" class="row justify-content-center align-items-center">
                 <div id="base-column" class="col-md-6">
                     <div id="base-box" class="col-md-12">
                         <br/>
-                        <h3 class="text-center text-info">th:text="#{add_visit}"</h3>
+                        <h3 class="text-center text-info" th:text="#{add_visit}"></h3>
                         <br/>
-                        <select th:field="*{doctor.id}" class="form-control" name="doctor_id" id="doctors">
-                            <option value="">th:text="#{select_doctor}"...</option>
-                            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.name}"></option>
+                        <select class="form-control" name="doctor" id="doctors">
+                            <option value="" th:text="#{select_doctor}">...</option>
+                            <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() eq schedule.getDoctorId()}" th:text="${doctor.toString()}"></option>
                         </select>
+                        <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('doctor')}" th:errors="*{doctor}"></small>-->
                         <br>
-                        <select th:field="*{patient.id}" class="form-control" name="patient_id" id="patients">
-                            <option value="">th:text="#{select_patient}"...</option>
-                            <option th:each="patient : ${patients}" th:value="${patients.id}" th:text="${patients.name}"></option>
+                        <select class="form-control" name="patient" id="patients">
+                            <option value="" th:text="#{select_patient}">...</option>
+                            <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() eq schedule.getPatientId()}" th:text="${patient.toString()}"></option>
                         </select>
+                        <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('patient')}" th:errors="*{patient}"></small>-->
                         <div class="form-group">
-                            <label for="visit_time" class="text-info">th:text="#{visit_time}":</label><br>
-                            <input type="datetime-local" name="visit_time" id="visit_time" class="form-control" value="${visit_time}">
+                            <label for="visit_time" class="text-info" th:text="#{visit_time}">:</label><br>
+                            <input type="datetime-local" name="dateVisit" id="visit_time" class="form-control" value="${visit_time}">
+                            <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('dateVisit')}" th:errors="*{dateVisit}"></small>-->
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="submit" class="btn btn-info btn-md" value="<fmt:message key='save'/>">
-                            <label class="text-danger"><em><strong>th:value="${message}"</strong></em></label>
+                            <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>
                         </div>
                     </div>
                 </div>

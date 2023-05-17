@@ -1,7 +1,7 @@
 package com.fuegos1981.hospitalSpring.service.impl;
 
 import com.fuegos1981.hospitalSpring.model.Category;
-import com.fuegos1981.hospitalSpring.model.Diagnosis;
+import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.MainQuery;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.CategoryRepository;

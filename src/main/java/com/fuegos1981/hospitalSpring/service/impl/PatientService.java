@@ -2,6 +2,7 @@ package com.fuegos1981.hospitalSpring.service.impl;
 
 import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Patient;
+import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.elements.PatientRepository;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.service.GlobalService;

@@ -3,18 +3,22 @@ package com.fuegos1981.hospitalSpring.service;
 import com.fuegos1981.hospitalSpring.dto.AppointmentDto;
 import com.fuegos1981.hospitalSpring.dto.ScheduleDto;
 import com.fuegos1981.hospitalSpring.exception.DBException;
-import com.fuegos1981.hospitalSpring.model.Appointment;
-import com.fuegos1981.hospitalSpring.model.Schedule;
+import com.fuegos1981.hospitalSpring.model.*;
 import com.fuegos1981.hospitalSpring.service.impl.DiagnosisService;
 import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
 import com.fuegos1981.hospitalSpring.service.impl.PatientService;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-
+@Service
 public class MappingUtils {
-    private final DoctorService doctorService;
-    private final PatientService patientService;
-    private final DiagnosisService diagnosisService;
+    private DoctorService doctorService;
+    private PatientService patientService;
+    private DiagnosisService diagnosisService;
+
+    public MappingUtils() {
+    }
+
     public MappingUtils(DoctorService doctorService, PatientService patientService, DiagnosisService diagnosisService) {
         this.doctorService = doctorService;
         this.patientService = patientService;
@@ -77,4 +81,6 @@ public class MappingUtils {
 
         return entity;
     }
+
+
 }

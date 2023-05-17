@@ -13,11 +13,15 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DiagnosisService implements GlobalService<Diagnosis> {
+public class DiagnosisService implements GlobalService<Diagnosis>{
 
     private DiagnosisRepository diagnosisRepository;
     private AppointmentService appointmentService;
 
+    public DiagnosisService(DiagnosisRepository diagnosisRepository, AppointmentService appointmentService) {
+        this.diagnosisRepository = diagnosisRepository;
+        this.appointmentService = appointmentService;
+    }
 
     @Override
     public Diagnosis create(Diagnosis diagnosis){

@@ -14,8 +14,8 @@ public class Category implements SimpleModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+    //@Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
+     //       message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 

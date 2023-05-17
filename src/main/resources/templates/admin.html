@@ -39,8 +39,8 @@
                                 <td th:text="${status.count+maxCountOnPage*(current_page_patient-1)}"></td>
                                 <td th:text="${patient.toString()}"></td>
                                 <td th:text="${{patient.getBirthdayString()}}"></td>
-                                <td><a href ="/hospitalSpring/patients/update/${patient.getId()}" th:text="#{read}"></a></td>
-                                <td><a href ="/hospitalSpring/addSchedule?patient_id=${patient.getId()}&command=add_schedule&from=admin" th:text="#{visit}"></a></td>
+                                <td><a th:href="@{|/hospitalSpring/patients/update/${patient.getId()}|}" th:text="#{read}"></a></td>
+                                <td><a th:href="@{|/hospitalSpring/schedules/create/patient/${patient.getId()}|}" th:text="#{visit}"></a></td>
                             </tr>
                     </table>
                     <div data-th-utext="*{pg_patient}"></div>
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <br>
                         <a class="btn btn-info btn-md" href="/hospitalSpring/doctors/create" th:text="#{create_doctor}"></a>
-                        <a class="btn btn-info btn-md" href="/hospitalSpring/simple?command=simple" th:text="#{Update_catalog}"></a>
+                        <a class="btn btn-info btn-md" href="/hospitalSpring/simples/all" th:text="#{Update_catalog}"></a>
                     </div>
                     <div class="form-group">
                         <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_ASC" th:text="${sortDoctor=='NAME_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠗</span>
@@ -70,9 +70,9 @@
                             <td th:text="${status.count+maxCountOnPage*(current_page_doctor-1)}"></td>
                             <td th:text="${''+doctor.getLastName()+' '+doctor.getFirstName()}"></td>
                             <td th:text="${doctor.getCategory()}">/td>
-                            <td><a href ="/hospitalSpring/medic?command=medic&doctor_id=${doctor.getId()}" th:text="#{read}"></a></td>
-                            <td><a href ="/hospitalSpring/editDoctor?command=edit_doctor&id=${doctor.getId()}&isFirst=true" th:text="#{edit}"></a></td>
-                            <td><a href ="/hospitalSpring/addSchedule?doctor_id=${doctor.getId()}&name=${doctor.toString()}&command=add_schedule&from=admin" th:text="#{visit}"></a></td>
+                            <td><a th:href="@{|/hospitalSpring/medic/${doctor.getId()}|}" th:text="#{read}"></a></td>
+                            <td><a th:href="@{|/hospitalSpring/doctors/update/${doctor.getId()}|}" th:text="#{edit}"></a></td>
+                            <td><a th:href="@{|/hospitalSpring/schedules/create/doctor/${doctor.getId()}|}" th:text="#{visit}"></a></td>
                         </tr>
 
                     </table>

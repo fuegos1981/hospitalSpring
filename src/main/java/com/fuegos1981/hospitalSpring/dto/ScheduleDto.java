@@ -2,7 +2,9 @@ package com.fuegos1981.hospitalSpring.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -13,6 +15,7 @@ public class ScheduleDto {
     private Integer patientId;
     private String doctorName;
     private String patientName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date dateVisit;
 
 
@@ -22,6 +25,15 @@ public class ScheduleDto {
         schedule.patientId=patientId;
         schedule.dateVisit = dateVisit;
         return schedule;
+    }
+    public String getDateVisitString(){
+        String dateVisitString ="";
+        if (dateVisit!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            dateVisitString = sdf.format(dateVisit);
+
+        }
+        return dateVisitString;
     }
 
 }

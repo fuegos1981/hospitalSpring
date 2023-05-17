@@ -9,9 +9,7 @@
         <link th:href="@{/styles/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form id="base-form" class="form" th:action="@{/hospitalSpring/patients/${command}}" th:object="${patient}" method="post">
-            <input type="hidden" name="command" value="edit_patient" />
-            <input type="hidden" name="id" value="${id}" />
+        <form id="base-form" class="form"  th:object="${patient}" method="post">
             <div th:insert="header"></div>
             <div id="base-edit-patient">
                 <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
@@ -23,13 +21,17 @@
                                 <h3 class="text-center text-info" th:text="#{patient}"></h3>
                                 <div class="form-group">
                                     <label class="text-info" th:text="#{last_name}">:</label><br>
-                                    <input type="text" name="last_name" id="last_name" class="form-control" th:value="${patient.getLastName()}"/>
+                                    <input type="text" name="lastName" id="lastName" class="form-control" th:value="${patient.getLastName()}"/>
+                                    <small class="form-text text-muted" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
                                     <label class="text-info" th:text="#{first_name}">:</label><br>
-                                    <input type="text" name="first_name" id="first_name" class="form-control" th:value="${patient.getFirstName()}"/>
+                                    <input type="text" name="firstName" id="firstName" class="form-control" th:value="${patient.getFirstName()}"/>
+                                    <small class="form-text text-muted" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
                                     <label for="email" class="text-info" th:text="#{Email}">:</label><br>
                                     <input type="email" name="email" id="email" class="form-control" th:value="${patient.getEmail()}"/>
+                                    <small class="form-text text-muted" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                                     <label for="birthday" class="text-info" th:text="#{birthday}">:</label><br>
-                                    <input type="date" name="birthday" id="birthday" class="form-control" lang ="${locale}" th:value="${birthday}">
+                                    <input type="date" name="birthday" id="birthday" class="form-control" th:value="${patient.getBirthdayString()}">
+                                    <small class="form-text text-muted" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></small>
                                 </div>
                                 <div class="form-group">
                                     <input type="radio" name="gender"  value="MALE" th:checked="${patient.getGender().toString() eq 'MALE'}" th:text="#{male}"/>
@@ -37,7 +39,6 @@
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>
-                                    <label class="text-danger"><em><strong th:text="${message}"></strong></em></label>
                                 </div>
                             </div>
                         </div>

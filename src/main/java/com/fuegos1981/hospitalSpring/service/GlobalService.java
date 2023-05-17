@@ -1,7 +1,9 @@
 package com.fuegos1981.hospitalSpring.service;
 
 import com.fuegos1981.hospitalSpring.exception.DBException;
+import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -16,4 +18,5 @@ public interface GlobalService<T> {
     int getSize(QueryRedactor qr) throws DBException;
     List<T> getAll() throws DBException, SQLException;
     int getSize() throws DBException;
+
 }
