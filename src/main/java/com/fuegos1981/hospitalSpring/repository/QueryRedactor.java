@@ -33,6 +33,10 @@ public class QueryRedactor {
         return qr;
     }
 
+    public Map<String, Object> getSelection() {
+        return selection;
+    }
+
     /**
      * <p>This method is used to receive object QueryRedactor
      * </p>
@@ -61,6 +65,7 @@ public class QueryRedactor {
         return qr;
     }
 
+
     /**
      * <p>This method is used to receive object QueryRedactor
      * </p>
@@ -82,8 +87,12 @@ public class QueryRedactor {
     public String getQuery() {
         return name.getQuery()
                 + getSelectionString(selection)
-                + (sortRule == null ? "" : sortRule.getQuery())
-                + (limit == null ? "" : " limit " + limit[0] + "," + limit[1]);
+                + (sortRule == null ? "" : sortRule.getQuery());
+                //+ (limit == null ? "" : " limit " + limit[0] + ", " + limit[1]);
+    }
+
+    public int[] getLimit() {
+        return limit;
     }
 
     /**

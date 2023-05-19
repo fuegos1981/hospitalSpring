@@ -1,6 +1,9 @@
 package com.fuegos1981.hospitalSpring.controller;
 
 import com.fuegos1981.hospitalSpring.exception.DBException;
+import com.fuegos1981.hospitalSpring.repository.MainQuery;
+import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
+import com.fuegos1981.hospitalSpring.repository.SortRule;
 import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
 import com.fuegos1981.hospitalSpring.service.impl.PatientService;
 import org.slf4j.Logger;
@@ -35,7 +38,8 @@ public class MainController {
     }
     @RequestMapping(value="/hospitalSpring/admin", method=RequestMethod.GET)
     public String admin(@RequestParam Map<String,String> allParams, Model model) throws DBException, SQLException {
-        model.addAttribute("patients",patientService.getAll());
+        int[] limit =new int[]{2,5};
+        model.addAttribute("patients",patientService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_PATIENTS,SortRule.valueOf("NAME_ASC"), limit)));
         model.addAttribute("pg_patient",new PaginationTag("patient",2,5).doTag());
         model.addAttribute("current_page_patient",1);
 

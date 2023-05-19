@@ -2,9 +2,8 @@ package com.fuegos1981.hospitalSpring.service.impl;
 
 import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Patient;
-import com.fuegos1981.hospitalSpring.model.SimpleModel;
-import com.fuegos1981.hospitalSpring.repository.elements.PatientRepository;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
+import com.fuegos1981.hospitalSpring.repository.elements.PatientRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
@@ -47,12 +46,11 @@ public class PatientService implements GlobalService<Patient> {
 
     @Override
     public List<Patient> getAll(QueryRedactor qr) throws DBException, SQLException {
-        //return patientRepository.getAll(qr);
-        return null;
+       return patientRepository.findAll(qr, Patient.class);
     }
 
-    public int getSize(QueryRedactor qr) throws DBException {
-        return 0;//patientRepository.getSize(qr);
+    public int getSize(QueryRedactor qr){
+        return patientRepository.count(qr,Patient.class);
     }
 
     @Override
@@ -60,8 +58,8 @@ public class PatientService implements GlobalService<Patient> {
         return patientRepository.findAll();
     }
 
-    public int getSize() throws DBException {
-        return 0;//patientRepository.getSize();
+    public int getSize(){
+        return (int) patientRepository.count();
     }
 
 }
