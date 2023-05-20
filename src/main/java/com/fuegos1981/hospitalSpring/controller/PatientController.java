@@ -30,7 +30,7 @@ public class PatientController {
         patient.setGender(Gender.MALE);
         logger.info("gggggg");
         model.addAttribute("patient", patient);
-        //model.addAttribute("genders", Gender.values());
+        model.addAttribute("genders", Gender.values());
         return "edit-patient";
     }
 
@@ -39,6 +39,7 @@ public class PatientController {
                          @Validated @ModelAttribute("patient") Patient patient, BindingResult result) throws DBException, SQLException {
 
         if (result.hasErrors()) {
+            model.addAttribute("genders", Gender.values());
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!create post patient");
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
             return "edit-patient";

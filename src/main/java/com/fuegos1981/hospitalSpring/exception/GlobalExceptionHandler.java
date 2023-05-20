@@ -32,12 +32,13 @@ public class GlobalExceptionHandler {
     public ModelAndView accessDeniedExceptionHandler(HttpServletRequest request, AccessDeniedException exception) {
         return getModelAndView(request, HttpStatus.FORBIDDEN, exception);
     }
+    /*
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView internalServerErrorHandler(HttpServletRequest request, Exception exception) {
         return getModelAndView(request, HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
-
+*/
     private ModelAndView getModelAndView(HttpServletRequest request, HttpStatus httpStatus, Exception exception) {
         logger.error("Exception raised = {} :: URL = {}", exception.getMessage(), request.getRequestURL());
         ModelAndView modelAndView = new ModelAndView("error");

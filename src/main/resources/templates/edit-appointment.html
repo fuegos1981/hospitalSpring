@@ -1,0 +1,79 @@
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Appointment</title>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link th:href="@{/styles/main.css}" rel="stylesheet" />
+    </head>
+<body>
+<form id="base-form" class="form" th:object="${appointment}"  method="post">
+    <div th:insert="header"></div>
+    <div id="base3">
+        <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
+        <div class="container">
+            <div class="row row-appointment">
+                <div id ="appointment_table_info" class="col-md-12">
+                    <br/>
+                    <h3 class="text-center text-info" th:text="#{appointment}"></h3>
+                    <br/>
+                    <table class="table table-bordered table-hover table-striped">
+                        <tr>
+                            <th th:text="#{num}"></th>
+                            <th th:text="#{date}"></th>
+                            <th th:text="#{patient}"></th>
+                            <th th:text="#{Doctor}"></th>
+                            <th th:text="#{diagnosis}"></th>
+                        </tr>
+                        <tr>
+                            <td><input  disabled type="label" name="id" id="id" class="form-control" th:value="${appointment.getId()}"/></td>
+                            <td>
+                                <input type="date" name="dateCreate" id="dateCreate" class="form-control" th:value="${appointment.getDateCreateString()}">
+                            </td>
+                            <td>
+                                <select class="form-control" name="patient_id" id="patients">
+                                    <option value="" th:text="#{select_patient}">...</option>
+                                    <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() eq appointment.getPatientId()}" th:text="${patient.toString()}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="doctor_id" id="doctors">
+                                    <option value="" th:text="#{select_doctor}">...</option>
+                                    <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() eq appointment.getDoctorId()}" th:text="${doctor.toString()}"></option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control" name="diagnosis_id" id="diagnosises">
+                                    <option value="" th:text="#{select_diagnosis}">...</option>
+                                    <option th:each="diagnosis : ${diagnosises}" th:value="${diagnosis.getId()}" th:selected="${diagnosis.getId() eq appointment.getDiagnosisId()}" th:text="${diagnosis.toString()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="base-column" class="col-md-12">
+                    <div id="base-box" class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="medication" class="text-info" th:text="#{Medication}">:</label><br>
+                                <input type="text" name="medication" id="medication" class="form-control" th:value="${appointment.getMedication()}"/>
+                                <label for="procedures" class="text-info" th:text="#{Procedure}">:</label><br>
+                                <input type="text" name="procedures" id="procedures" class="form-control" th:value="${appointment.getProcedure()}"/>
+                                <label for="operation" class="text-info" th:text="#{Operation}">:</label><br>
+                                <input type="text" name="operation" id="operation" class="form-control" th:value="${appointment.getOperation()}"/>
+                            </div>
+                            <div class="form-group">
+                                <br>
+                                <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

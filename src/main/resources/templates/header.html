@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="form-group">
+    <button type="submit" name="language"class="btn btn-info btn-md" value ="en" th:text="#{en}"></button>
+    <button type="submit" name="language"class="btn btn-info btn-md" value ="ua" th:text="#{ua}"></button>
+    <!--
+    <span th:if="${role.toString() eq ''}">
+
+        <span th:if="${role.toString() eq 'ADMIN'}">
+            <a class="btn btn-info btn-md" href="/hospital/admin?command=admin">th:text="#{main}"</a>
+        </span>
+        <span th:if="${role.toString() eq 'DOCTOR'||role.toString() eq 'NURSE'}">
+            <a class="btn btn-info btn-md" href="/hospital/medic?command=medic&doctor_id=${user_id}">th:text="#{main}"></a>
+        </span>
+
+        <a class="btn btn-info btn-md" href="/hospital/login?command=logout">th:text="#{logout}" th:text='${user_name}</a>
+    </span>
+    -->
+</div>
+<script type="text/javascript" th:src="@{/main.js}"></script>
+</html>

@@ -53,11 +53,11 @@ public class DoctorService implements GlobalService<Doctor> {
 
     @Override
     public List<Doctor> getAll(QueryRedactor qr) throws SQLException {
-        return null;
+        return doctorRepository.findAll(qr, Doctor.class);
     }
 
     public int getSize(QueryRedactor qr) {
-        return 0;//doctorRepository.getSize(qr);
+        return doctorRepository.count(qr, Doctor.class);
     }
 
     @Override

@@ -3,9 +3,8 @@ package com.fuegos1981.hospitalSpring.repository;
 public enum MainQuery {
     GET_ALL_PATIENTS ("from Patient el"),
     GET_ALL_DOCTORS("from Doctor el" +
-            "join category on category.id=doctor.category_id " +
-            "join roles on roles.id=doctor.role_id "+
-            " left join (select Count(distinct patient_id) as count_patients,doctor_id  from schedule group by doctor_id)as sch on sch.doctor_id= doctor.id"),
+            " left join fetch el.category category"),// +
+            //" left join (select Count(distinct patient_id) as count_patients,doctor_id  from schedule group by doctor_id)as sch on sch.doctor_id= doctor.id"),
     GET_ALL_SCHEDULES("from Schedule"),
     GET_ALL_APPOINTMENTS("from Appointment"),
     GET_ALL_CATEGORIES("from Category"),

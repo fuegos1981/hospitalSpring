@@ -11,7 +11,6 @@
 <body>
 <form id="base-form" class="form" th:action="@{/hospitalSpring/admin}" method="get">
     <div th:insert="header"></div>
-    <input type="hidden" name="command" value="admin" />
     <div id="base1">
         <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">
@@ -50,14 +49,18 @@
                         <br>
                         <a class="btn btn-info btn-md" href="/hospitalSpring/doctors/create" th:text="#{create_doctor}"></a>
                         <a class="btn btn-info btn-md" href="/hospitalSpring/simples/all" th:text="#{Update_catalog}"></a>
+                        <select class="btn btn-info btn-md" name="category_id" id="categories" onChange="clickSubmit()">
+                            <option value="" th:text="#{select_category}">...</option>
+                            <option th:each="category : ${categories}" th:value="${category.getId()}" th:selected="${category.getId()==category_id}" th:text="${category.getName()}"></option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_ASC" th:text="${sortDoctor=='NAME_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠗</span>
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_DESC" th:text="${sortDoctor=='NAME_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠕</span>
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_ASC" th:text="${sortDoctor=='CATEGORY_ASC' ? 'checked':''}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠗</span>
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_DESC" th:text="${sortDoctor=='CATEGORY_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠕</span>
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_ASC" th:text="${sortDoctor=='COUNT_PATIENT_ASC' ? 'checked':''}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠗</span>
-                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_DESC" th:text="${sortDoctor=='COUNT_PATIENT_DESC' ? 'checked':''}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_ASC" th:checked="${sortDoctor eq 'NAME_ASC'}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="NAME_DESC" th:checked="${sortDoctor eq 'NAME_DESC'}"/><span class="dirrect" th:text="#{name}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_ASC" th:checked="${sortDoctor eq 'CATEGORY_ASC'}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="CATEGORY_DESC" th:checked="${sortDoctor eq 'CATEGORY_DESC'}"/><span class="dirrect" th:text="#{category}"></span><span class="dirrect"> 🠕</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_ASC" th:checked="${sortDoctor eq 'COUNT_PATIENT_ASC'}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠗</span>
+                        <input type="radio" name="sortDoctor" onClick="clickSubmit()"  value="COUNT_PATIENT_DESC" th:checked="${sortDoctor eq 'COUNT_PATIENT_DESC'}"/><span class="dirrect" th:text="#{patients}"></span><span class="dirrect"> 🠕</span>
                     </div>
                     <table id = "AllDoctors" class="table table-bordered table-hover table-striped">
                         <tr>

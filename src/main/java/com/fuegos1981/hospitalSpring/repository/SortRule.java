@@ -3,8 +3,8 @@ package com.fuegos1981.hospitalSpring.repository;
 public enum SortRule {
     NAME_ASC (" order by el.lastName asc, el.firstName asc"),
     NAME_DESC(" order by el.lastName desc, el.firstName desc"),
-    CATEGORY_ASC(" order by category_name, el.lastName, el.firstName"),
-    CATEGORY_DESC(" order by category_name desc, el.lastName, el.firstName"),
+    CATEGORY_ASC(" order by category.name, el.lastName, el.firstName"),
+    CATEGORY_DESC(" order by category.name desc, el.lastName, el.firstName"),
     COUNT_PATIENT_ASC(" order by count_patients, el.lastName, el.firstName"),
     COUNT_PATIENT_DESC(" order by count_patients desc, el.lastName, el.firstName"),
     BIRTHDAY_ASC(" order by birthday,el.lastName,el.firstName"),
