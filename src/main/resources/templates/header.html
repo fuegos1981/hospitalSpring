@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="menu">
 <div class="form-group">
     <button type="submit" name="language"class="btn btn-info btn-md" value ="en" th:text="#{en}"></button>
     <button type="submit" name="language"class="btn btn-info btn-md" value ="ua" th:text="#{ua}"></button>
@@ -17,5 +18,5 @@
     </span>
     -->
 </div>
-<script type="text/javascript" th:src="@{/main.js}"></script>
+</div>
 </html>

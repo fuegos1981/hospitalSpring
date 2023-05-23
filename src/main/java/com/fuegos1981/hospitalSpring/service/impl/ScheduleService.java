@@ -3,6 +3,7 @@ package com.fuegos1981.hospitalSpring.service.impl;
 
 import com.fuegos1981.hospitalSpring.dto.ScheduleDto;
 import com.fuegos1981.hospitalSpring.exception.DBException;
+import com.fuegos1981.hospitalSpring.model.Schedule;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.ScheduleRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
@@ -46,12 +47,14 @@ public class ScheduleService implements GlobalService<ScheduleDto> {
 
     @Override
     public List<ScheduleDto> getAll(QueryRedactor qr) throws SQLException {
-        return null;
+        return scheduleRepository.findAll(qr, Schedule.class).stream()
+                .map(mappingUtils::mapToScheduleDto)
+                .collect(Collectors.toList());
 
     }
 
     public int getSize(QueryRedactor qr){
-        return 0;//scheduleRepository.getSize(qr);
+        return scheduleRepository.count(qr, Schedule.class);
     }
 
     @Override

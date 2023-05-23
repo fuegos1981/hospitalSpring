@@ -9,86 +9,85 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet" />
 </head>
 <body>
-<form id="base-form" class="form" action="readPatient?id=${patient_id}&command=patient_info" method="post">
-    <div>th:replace="header"</div>
-    <input type="hidden" name="command" value="patient_info" />
+<form id="base-form" class="form"  method="post">
+    <div th:insert="header::menu"></div>
     <input id = "sub" type="submit" name="submit" class="btn btn-info btn-md" value="sub">
-    <input type="hidden" name="patient_id" value="${patient_id}" />
     <div id="base1">
-        <h3 class="text-center text-white pt-5">th:text="#{hospital}"</h3>
+        <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">
             <div class="row row-patient">
-                <div id ="patient_table_info" class="col-md-12">
+                <div id ="patient_table_info" class="col-md-12" th:object="${patient}" >
+                    <input type="hidden" name="id" th:value="${patient.getId()}"/>
                     <table class="table table-bordered table-hover table-striped">
                         <tr>
-                            <th>th:text="#{Name}"</th>
-                            <th>th:text="#{Birthday}"</th>
-                            <th>th:text="#{Email}"</th>
-                            <th colspan ="2">th:text="#{operation}"</th>
+                            <th th:text="#{Name}"></th>
+                            <th th:text="#{Birthday}"></th>
+                            <th th:text="#{Email}"></th>
+                            <th colspan ="2" th:text="#{operation}"></th>
                         </tr>
-                        <tr th:each="patient, status : ${patients}">
-                            <td>th:text="${patient.toString()}"</td>
-                            <td>th:text="${patient.getBirthday()}"</td>
-                            <td>th:text="${patient.getEmail()}"</td>
-                            <td><a href ="editPatient?id=${patient.getId()}&command=edit_patient&isFirst=true" method="post"/>th:text="#{edit}"</td>
-                            <td><input type="submit" name="download" class="btn btn-info btn-md" value='<fmt:message key="download_history"/>'/></td>
+                        <tr>
+                            <td th:text="${patient.toString()}"></td>
+                            <td th:text="${patient.getBirthdayString()}"></td>
+                            <td th:text="${patient.getEmail()}"></td>
+                            <td><a th:href="@{|/hospitalSpring/patients/update/${patient.getId()}|}" text="#{edit}"/></td>
+                            <td><a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/patients/download/${patient.getId()}|}" th:text="#{download_history}"/></td>
                         </tr>
                     </table>
-                    th:text="${pg_patient}"
                 </div>
                 <div class="table-responsive col-md-6">
                     <div class="form-group">
                         <br>
-                        <a class="btn btn-info btn-md" href ="/hospital/addSchedule?patient_id=${patient.getId()}&command=add_schedule&is_patient=true&from=patient_info">th:text="#{add_visit}"</a>
+                        <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create?patient_id=${patient.getId()}|}" th:text="#{add_visit}"></a>
                     </div>
                     <table id = "AllSchedule" class="table table-bordered table-hover table-striped">
                         <tr>
-                            <th>th:text="#{num}"</th>
-                            <th>th:text="#{Name}"</th>
-                            <th>th:text="#{visit}"</th>
-                            <th colspan ="2">th:text="#{hospital}"</th>
+                            <th th:text="#{num}"></th>
+                            <th th:text="#{Name}"></th>
+                            <th th:text="#{visit}"></th>
+                            <th colspan ="2" th:text="#{hospital}"></th>
                         </tr>
+
                             <tr th:each="schedule, status : ${schedules}">
-                                <td>th:text="${status.count+maxCountOnPage*(current_page_schedule-1)}"</td>
-                                <td>th:text="${schedule.getDoctorName()}"</td>
-                                <td>th:text="${#dates.format("${schedule.getDateVisit()}", 'yyyy-MM-dd HH:mm')}"</td>
-                                <td><a href ="/hospital/addSchedule?id=${schedule.getId()}&patient_id=${schedule.getPatientId()}&command=add_schedule&isFirst=true&from=patient_info"/>th:text="#{edit}"</td>
-                                <td><a href ="/hospital/deleteSchedule?id=${schedule.getId()}&patient_id=${schedule.getPatientId()}&command=delete_schedule&from=patient_info"/>th:text="#{delete}"</td>
+                                <td th:text="${status.count+maxCountOnPage*(current_page_schedule-1)}"></td>
+                                <td th:text="${schedule.getDoctorName()}"></td>
+                                <td th:text="${schedule.getDateVisitString()}"></td>
+                                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}?patient_id=${schedule.getPatientId()}|}" th:text="#{edit}"/></td>
+                                <td><a th:href="@{|/hospitalSpring/schedules/delete/${schedule.getId()}|}" th:text="#{delete}"/></td>
                             </tr>
                     </table>
-                    th:text="${pg_schedule}"
+                    <div data-th-utext="*{pg_schedule}"></div>
                 </div>
                 <div class="table-responsive  col-md-6">
                     <div class="form-group">
                         <br>
-                        <a class="btn btn-info btn-md" href="/hospital/editAppointment?command=edit_appointment&patient_id=${patient_id}&isFirst=true&from=patient_info">th:text="#{create_appointment}"</a>
+                        <a class="btn btn-info btn-md" href="/hospital/appointments/create" th:text="#{create_appointment}"></a>
                     </div>
                     <table id = "AllAppointments" class="table table-bordered table-hover table-striped">
                         <tr>
-                            <th>th:text="#{num}"</th>
-                            <th>th:text="#{date}"</th>
-                            <th>th:text="#{Doctor}"</th>
-                            <th>th:text="#{Category}"</th>
-                            <th>th:text="#{diagnosis}"</th>
-                            <th colspan ="1">th:text="#{operation}"</th>
+                            <th th:text="#{num}"></th>
+                            <th th:text="#{date}"></th>
+                            <th th:text="#{Doctor}"></th>
+                            <th th:text="#{Category}"></th>
+                            <th th:text="#{diagnosis}"></th>
+                            <th colspan ="1" th:text="#{operation}"></th>
                         </tr>
 
                             <tr th:each="appointment, status : ${appointments}">
-                                <td>th:text="${status.count+maxCountOnPage*(current_page_appointment-1)}"</td>
-                                <td>th:text="${appointment.getDateCreate()}"</td>
-                                <td>th:text="${appointment.getDoctorName()}"</td>
-                                <td>th:text="${appointment.getCategoryName()}"</td>
-                                <td>th:text="${appointment.getDiagnosisName()}"</td>
-                                <td><a href ="/hospital/editAppointment?id=${appointment.getId()}&patient_id=${patient.getId()}&command=edit_appointment&isFirst=true&from=patient_info"/>th:text="#{edit}"</td>
+                                <td th:text="${status.count+maxCountOnPage*(current_page_appointment-1)}"></td>
+                                <td th:text="${appointment.getDateCreateString()}"></td>
+                                <td th:text="${appointment.getDoctorName()}"></td>
+                                <td th:text="${appointment.getCategoryName()}"></td>
+                                <td th:text="${appointment.getDiagnosisName()}"></td>
+                                <td><a th:href="@{|/hospitalSpring/appointments/update/${appointment.getId()}|}" th:text="#{edit}"/></td>
                             </tr>
-
                     </table>
-                    th:text="${pg_appointment}"
+                    <div data-th-utext="*{pg_appointment}"></div>
                 </div>
             </div>
         </div>
     </div>
 </form>
+
 </body>
 <script type="text/javascript" th:src="@{/main.js}"></script>
 </html>

@@ -10,10 +10,10 @@
 </head>
 <body>
 <form id="base-form" class="form" th:action="@{/hospitalSpring/simples/${command}/{simple}}" th:object="${simpleModel}" method="get">
-    <div th:insert="header"></div>
+    <div th:insert="header::menu"></div>
+    <input type="hidden" name="id" th:value="${simple.getId()}"/>
     <div id="base">
         <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
-
         <div class="container">
             <div id="base-row" class="row justify-content-center align-items-center">
                 <div id="base-column" class="col-md-6">

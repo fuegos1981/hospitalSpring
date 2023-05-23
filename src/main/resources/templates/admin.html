@@ -10,7 +10,7 @@
 </head>
 <body>
 <form id="base-form" class="form" th:action="@{/hospitalSpring/admin}" method="get">
-    <div th:insert="header"></div>
+    <div th:insert="header::menu"></div>
     <div id="base1">
         <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">
@@ -38,7 +38,7 @@
                                 <td th:text="${status.count+maxCountOnPage*(current_page_patient-1)}"></td>
                                 <td th:text="${patient.toString()}"></td>
                                 <td th:text="${{patient.getBirthdayString()}}"></td>
-                                <td><a th:href="@{|/hospitalSpring/patients/update/${patient.getId()}|}" th:text="#{read}"></a></td>
+                                <td><a th:href="@{|/hospitalSpring/patients/read/${patient.getId()}|}" th:text="#{read}"></a></td>
                                 <td><a th:href="@{|/hospitalSpring/schedules/create/patient/${patient.getId()}|}" th:text="#{visit}"></a></td>
                             </tr>
                     </table>

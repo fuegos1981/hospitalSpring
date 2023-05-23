@@ -10,7 +10,8 @@
     </head>
 <body>
 <form id="base-form" class="form" th:object="${appointment}"  method="post">
-    <div th:insert="header"></div>
+    <div th:insert="header::menu"></div>
+    <input type="hidden" name="id" th:value="${appointment.getId()}"/>
     <div id="base3">
         <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">

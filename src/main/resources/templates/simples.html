@@ -10,7 +10,7 @@
 </head>
 <body>
 <form id="base-form" class="form" th:action="@{/hospitalSpring/simples/all}" method="get">
-    <div th:insert="header"></div>
+    <div th:insert="header::menu"></div>
     <input type="hidden" name="command" value="simple" />
     <input id = "sub" type="submit" name="submit" class="btn btn-info btn-md" value="sub">
     <div id="base1">

@@ -30,26 +30,24 @@ public class ScheduleController {
         this.doctorService= doctorService;
     }
     @GetMapping("/create")
-    public String create(Model model) throws SQLException, DBException {
+    public String create(@RequestParam(required = false, value="patient_id") Integer  patientId,
+                         @RequestParam(required = false, value="doctor_id") Integer  doctorId,
+                         Model model) throws SQLException, DBException {
         ScheduleDto scheduleDto =new ScheduleDto();
+        if (patientId!=null){
+            scheduleDto.setPatientId(patientId);
+        }
+        if (doctorId!=null){
+            scheduleDto.setDoctorId(doctorId);
+        }
         model.addAttribute("schedule", scheduleDto);
         model.addAttribute("doctors", doctorService.getAll());
         model.addAttribute("patients", patientService.getAll());
         return "edit-schedule";
     }
 
-    @GetMapping("/create/patient/{patient_id}")
-    public String create(@PathVariable("patient_id") int patientId,Model model) throws SQLException, DBException {
-        ScheduleDto scheduleDto =new ScheduleDto();
-        scheduleDto.setPatientId(patientId);
-        //logger.info("gggggg");
-        model.addAttribute("schedule", scheduleDto);
-        model.addAttribute("doctors", doctorService.getAll());
-        model.addAttribute("patients", patientService.getAll());
-        return "edit-schedule";
-    }
 
-    @PostMapping({"/create/patient/{patient_id}", "/create/doctor/{doctor_id}"})
+    @PostMapping({"/create"})
     public String create(@Validated @ModelAttribute("schedule") ScheduleDto schedule, BindingResult result) throws DBException, SQLException {
         String res = "redirect:/hospitalSpring/admin";
         if (result.hasErrors()) {
@@ -60,16 +58,6 @@ public class ScheduleController {
         return res;
     }
 
-    @GetMapping("/create/doctor/{doctor_id}")
-    public String createDoc(@PathVariable("doctor_id") int doctorId,Model model) throws SQLException, DBException {
-        ScheduleDto scheduleDto =new ScheduleDto();
-        scheduleDto.setDoctorId(doctorId);
-        //logger.info("gggggg");
-        model.addAttribute("schedule", scheduleDto);
-        model.addAttribute("doctors", doctorService.getAll());
-        model.addAttribute("patients", patientService.getAll());
-        return "edit-schedule";
-    }
 
     @GetMapping("/update/{schedule_id}/patient/{patient_id}")
     public String update(@PathVariable("schedule_id") int scheduleId,@PathVariable("patient_id") int patientId, Model model) throws DBException, SQLException {

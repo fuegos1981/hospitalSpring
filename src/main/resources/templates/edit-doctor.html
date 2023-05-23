@@ -11,8 +11,8 @@
 <body>
 <form id="base-form" class="form" action="/hospitalSpring/doctors/${command}" th:object="${doctor}" method="post">
     <input type="hidden" name="command" value="edit_doctor"/>
-    <input type="hidden" name="id" value="${id}"/>
-    <div th:insert="header"></div>
+    <input type="hidden" name="id" th:value="${doctor.getId()}"/>
+    <div th:insert="header::menu"></div>
     <div id="base2">
         <h3 class="text-center text-white" th:text="#{hospital}">
         </h3>
@@ -37,9 +37,7 @@
                             <input type="password" name="password" id="password" class="form-control"
                                    value="${password}"/>
                             <br/>
-                            <input type="radio" name="role" value="ADMIN" th:checked="${doctor.getRole().toString() eq 'ADMIN'}" th:text="#{admin}"/>
-                            <input type="radio" name="role" value="DOCTOR" th:checked="${doctor.getRole().toString() eq 'DOCTOR'}" th:text="#{doctor}"/>
-                            <input type="radio" name="role" value="NURSE" th:checked="${doctor.getRole().toString() eq 'NURSE'}" th:text="#{nurse}"/>
+                            <input th:each="role : ${roles}" th:value="${role}" type="radio" name="role"  th:checked="${doctor.getRole() ==role}" th:text="#{${role}}"/>
                         </div>
                         <select class="form-control" name="category_id" id="categories">
                             <option value="" th:text="#{select_category}">...</option>

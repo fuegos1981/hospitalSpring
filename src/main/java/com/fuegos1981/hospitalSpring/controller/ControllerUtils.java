@@ -18,13 +18,6 @@ public class ControllerUtils {
             return new int[]{(currentPage-1)*MAX_COUNT_ON_PAGE,MAX_COUNT_ON_PAGE};
         }
     }
-    public static void setCurrentLocale(Model model, Map<String, String> allParams) {
-        if (allParams.get("submit_en") != null) {
-            model.addAttribute("language", "en");
-        } else if (allParams.get("submit_ua") != null) {
-            model.addAttribute("language", "ua");
-        }
-    }
 
     public static Integer parseID(Model model,Map<String,String> allParams, String idName) {
 

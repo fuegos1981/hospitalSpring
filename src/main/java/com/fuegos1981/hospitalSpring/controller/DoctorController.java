@@ -41,7 +41,7 @@ public class DoctorController {
     public String create(Model model,
                          @Validated @ModelAttribute("doctor") Doctor doctor, BindingResult result) throws DBException {
         if (result.hasErrors()) {
-            //model.addAttribute("genders", Gender.values());
+            model.addAttribute("roles", Role.values());
             return "edit-doctor";
         }
         doctorService.create(doctor);

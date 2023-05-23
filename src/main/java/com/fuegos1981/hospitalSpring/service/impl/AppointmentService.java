@@ -3,6 +3,7 @@ package com.fuegos1981.hospitalSpring.service.impl;
 
 import com.fuegos1981.hospitalSpring.dto.AppointmentDto;
 import com.fuegos1981.hospitalSpring.exception.DBException;
+import com.fuegos1981.hospitalSpring.model.Appointment;
 import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.AppointmentRepository;
@@ -47,12 +48,14 @@ public class AppointmentService implements GlobalService<AppointmentDto> {
 
     @Override
     public List<AppointmentDto> getAll(QueryRedactor qr) throws  SQLException {
-        return null;
+        return appointmentRepository.findAll(qr, Appointment.class).stream()
+                .map(mappingUtils::mapToAppointmentDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public int getSize(QueryRedactor qr) {
-        return 0;// appointmentRepository.getSize(qr);
+        return appointmentRepository.count(qr, Appointment.class);
     }
 
     @Override
