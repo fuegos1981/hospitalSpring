@@ -39,7 +39,7 @@
                                 <td th:text="${patient.toString()}"></td>
                                 <td th:text="${{patient.getBirthdayString()}}"></td>
                                 <td><a th:href="@{|/hospitalSpring/patients/read/${patient.getId()}|}" th:text="#{read}"></a></td>
-                                <td><a th:href="@{|/hospitalSpring/schedules/create/patient/${patient.getId()}|}" th:text="#{visit}"></a></td>
+                                <td><a th:href="@{|/hospitalSpring/schedules/create?command=admin&patient_id=${patient.getId()}|}" th:text="#{visit}"></a></td>
                             </tr>
                     </table>
                     <div data-th-utext="*{pg_patient}"></div>
@@ -75,7 +75,7 @@
                             <td th:text="${doctor.getCategory()}">/td>
                             <td><a th:href="@{|/hospitalSpring/medic/${doctor.getId()}|}" th:text="#{read}"></a></td>
                             <td><a th:href="@{|/hospitalSpring/doctors/update/${doctor.getId()}|}" th:text="#{edit}"></a></td>
-                            <td><a th:href="@{|/hospitalSpring/schedules/create/doctor/${doctor.getId()}|}" th:text="#{visit}"></a></td>
+                            <td><a th:href="@{|/hospitalSpring/schedules/create?command=admin&doctor_id=${doctor.getId()}|}" th:text="#{visit}"></a></td>
                         </tr>
 
                     </table>

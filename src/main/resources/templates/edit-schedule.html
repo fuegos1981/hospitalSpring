@@ -21,20 +21,20 @@
                         <br/>
                         <h3 class="text-center text-info" th:text="#{add_visit}"></h3>
                         <br/>
-                        <select class="form-control" name="doctor" id="doctors">
+                        <select class="form-control" name="doctorId" id="doctorId">
                             <option value="" th:text="#{select_doctor}">...</option>
-                            <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() eq schedule.getDoctorId()}" th:text="${doctor.toString()}"></option>
+                            <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() == schedule.getDoctorId()}" th:text="${doctor.toString()}"></option>
                         </select>
-                        <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('doctor')}" th:errors="*{doctor}"></small>-->
+                        <small class="form-text text-muted" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></small>
                         <br>
-                        <select class="form-control" name="patient" id="patients">
+                        <select class="form-control" name="patientId" id="patientId">
                             <option value="" th:text="#{select_patient}">...</option>
-                            <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() eq schedule.getPatientId()}" th:text="${patient.toString()}"></option>
+                            <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() == schedule.getPatientId()}" th:text="${patient.toString()}"></option>
                         </select>
-                        <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('patient')}" th:errors="*{patient}"></small>-->
+                        <small class="form-text text-muted" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}"></small>
                         <div class="form-group">
                             <label for="visit_time" class="text-info" th:text="#{visit_time}">:</label><br>
-                            <input type="datetime-local" name="dateVisit" id="visit_time" class="form-control" value="${visit_time}">
+                            <input type="datetime-local" name="dateVisit" id="visit_time" class="form-control" th:value="${schedule.getDateVisitString()}">
                             <!--<small class="form-text text-muted" th:if="${#fields.hasErrors('dateVisit')}" th:errors="*{dateVisit}"></small>-->
                         </div>
                         <div class="form-group">

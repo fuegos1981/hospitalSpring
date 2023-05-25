@@ -1,7 +1,7 @@
 package com.fuegos1981.hospitalSpring.service.impl;
 
+import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Category;
-import com.fuegos1981.hospitalSpring.model.SimpleModel;
 import com.fuegos1981.hospitalSpring.repository.MainQuery;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.CategoryRepository;
@@ -9,7 +9,6 @@ import com.fuegos1981.hospitalSpring.repository.elements.CategoryRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class CategoryService implements GlobalService<Category> {
     }
 
     @Override
-    public Category readById(Integer id) throws SQLException{
+    public Category readById(Integer id){
         if (id == null)
             return null;
         return categoryRepository.findById(id).get();
@@ -43,19 +42,19 @@ public class CategoryService implements GlobalService<Category> {
     }
 
     @Override
-    public void delete(Category category) throws SQLException {
+    public void delete(Category category) throws DBException {
         Map<String,Object> selection = new HashMap<>();
 
             selection.put("category.name", category.getName());
             if (doctorService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_DOCTORS,selection)).size()>0){
-                throw new SQLException("Doctor use this category!");
+                throw new DBException("Doctor use this category!");
             }
 
         categoryRepository.delete(category);
     }
 
     @Override
-    public List<Category> getAll(QueryRedactor qr) throws SQLException {
+    public List<Category> getAll(QueryRedactor qr){
         return null;//simpleRepository.getAll(qr);
     }
 
@@ -64,7 +63,7 @@ public class CategoryService implements GlobalService<Category> {
     }
 
     @Override
-    public List<Category> getAll() throws SQLException {
+    public List<Category> getAll(){
         return categoryRepository.findAll();
     }
 

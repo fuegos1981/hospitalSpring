@@ -1,5 +1,6 @@
 package com.fuegos1981.hospitalSpring.service.impl;
 
+import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Diagnosis;
 import com.fuegos1981.hospitalSpring.repository.MainQuery;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
@@ -7,7 +8,6 @@ import com.fuegos1981.hospitalSpring.repository.elements.DiagnosisRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class DiagnosisService implements GlobalService<Diagnosis>{
     }
 
     @Override
-    public Diagnosis readById(Integer id) throws SQLException{
+    public Diagnosis readById(Integer id){
         if (id == null)
             return null;
         return diagnosisRepository.findById(id).get();
@@ -41,17 +41,17 @@ public class DiagnosisService implements GlobalService<Diagnosis>{
     }
 
     @Override
-    public void delete(Diagnosis diagnosis) throws SQLException {
+    public void delete(Diagnosis diagnosis) throws DBException {
         Map<String,Object> selection = new HashMap<>();
         selection.put("diagnosis_id", diagnosis.getId());
         if (appointmentService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_APPOINTMENTS,selection)).size()>0){
-            throw new SQLException("Appointment use this diagnosis!");
+            throw new DBException("Appointment use this diagnosis!");
         }
         diagnosisRepository.delete(diagnosis);
     }
 
     @Override
-    public List<Diagnosis> getAll(QueryRedactor qr) throws SQLException {
+    public List<Diagnosis> getAll(QueryRedactor qr) {
         return null;//simpleRepository.getAll(qr);
     }
 
@@ -60,7 +60,7 @@ public class DiagnosisService implements GlobalService<Diagnosis>{
     }
 
     @Override
-    public List<Diagnosis> getAll() throws SQLException {
+    public List<Diagnosis> getAll(){
         return diagnosisRepository.findAll();
     }
 

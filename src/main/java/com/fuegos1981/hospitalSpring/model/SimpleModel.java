@@ -6,8 +6,8 @@ package com.fuegos1981.hospitalSpring.model;
  *
  */
 public interface SimpleModel {
-    void setId(int id);
-    int getId();
+    void setId(Integer id);
+    Integer getId();
     void setName(String name);
     String getName();
 

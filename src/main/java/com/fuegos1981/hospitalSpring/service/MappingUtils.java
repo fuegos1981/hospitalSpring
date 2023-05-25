@@ -2,27 +2,23 @@ package com.fuegos1981.hospitalSpring.service;
 
 import com.fuegos1981.hospitalSpring.dto.AppointmentDto;
 import com.fuegos1981.hospitalSpring.dto.ScheduleDto;
-import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.*;
-import com.fuegos1981.hospitalSpring.service.impl.DiagnosisService;
-import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
-import com.fuegos1981.hospitalSpring.service.impl.PatientService;
+import com.fuegos1981.hospitalSpring.repository.elements.DiagnosisRepository;
+import com.fuegos1981.hospitalSpring.repository.elements.DoctorRepository;
+import com.fuegos1981.hospitalSpring.repository.elements.PatientRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 @Service
 public class MappingUtils {
-    private DoctorService doctorService;
-    private PatientService patientService;
-    private DiagnosisService diagnosisService;
+    private DoctorRepository doctorRepository;
+    private PatientRepository patientRepository;
+    private DiagnosisRepository diagnosisRepository;
 
-    public MappingUtils() {
-    }
 
-    public MappingUtils(DoctorService doctorService, PatientService patientService, DiagnosisService diagnosisService) {
-        this.doctorService = doctorService;
-        this.patientService = patientService;
-        this.diagnosisService = diagnosisService;
+    public MappingUtils(DoctorRepository doctorRepository, PatientRepository patientRepository, DiagnosisRepository diagnosisRepository) {
+        this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
+        this.diagnosisRepository = diagnosisRepository;
     }
 
     //из entity в dto
@@ -39,11 +35,11 @@ public class MappingUtils {
     }
 
     //из dto в entity
-    public Schedule mapToSchedule(ScheduleDto dto) throws SQLException, DBException {
+    public Schedule mapToSchedule(ScheduleDto dto) {
         Schedule entity = new Schedule();
         entity.setId(dto.getId());
-        entity.setDoctor(doctorService.readById(dto.getDoctorId()));
-        entity.setPatient(patientService.readById(dto.getPatientId()));
+        entity.setDoctor(doctorRepository.findById(dto.getDoctorId()).get());
+        entity.setPatient(patientRepository.findById(dto.getPatientId()).get());
         entity.setDateVisit(dto.getDateVisit());
         return entity;
     }
@@ -68,12 +64,12 @@ public class MappingUtils {
     }
 
     //из dto в entity
-    public Appointment mapToAppointment(AppointmentDto dto) throws DBException, SQLException {
+    public Appointment mapToAppointment(AppointmentDto dto){
         Appointment entity = new Appointment();
         entity.setId(dto.getId());
-        entity.setDoctor(doctorService.readById(dto.getDoctorId()));
-        entity.setPatient(patientService.readById(dto.getPatientId()));
-        entity.setDiagnosis(diagnosisService.readById(dto.getDiagnosisId()));
+        entity.setDoctor(doctorRepository.findById(dto.getDoctorId()).get());
+        entity.setPatient(patientRepository.findById(dto.getPatientId()).get());
+        entity.setDiagnosis(diagnosisRepository.findById(dto.getDiagnosisId()).get());
         entity.setDateCreate(dto.getDateCreate());
         entity.setMedication(dto.getMedication());
         entity.setProcedure(dto.getProcedure());

@@ -11,7 +11,6 @@
 <body>
 <form id="base-form" class="form" th:object="${appointment}"  method="post">
     <div th:insert="header::menu"></div>
-    <input type="hidden" name="id" th:value="${appointment.getId()}"/>
     <div id="base3">
         <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
         <div class="container">
@@ -29,27 +28,31 @@
                             <th th:text="#{diagnosis}"></th>
                         </tr>
                         <tr>
-                            <td><input  disabled type="label" name="id" id="id" class="form-control" th:value="${appointment.getId()}"/></td>
+                            <td><input disabled  type="text" name="id" id="id" class="form-control" th:value="${appointment.getId()}"/></td>
                             <td>
                                 <input type="date" name="dateCreate" id="dateCreate" class="form-control" th:value="${appointment.getDateCreateString()}">
+                                <small class="form-text text-muted" th:if="${#fields.hasErrors('dateCreate')}" th:errors="*{dateCreate}"></small>
                             </td>
                             <td>
-                                <select class="form-control" name="patient_id" id="patients">
+                                <select class="form-control" name="patientId" id="patientId">
                                     <option value="" th:text="#{select_patient}">...</option>
-                                    <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() eq appointment.getPatientId()}" th:text="${patient.toString()}"></option>
+                                    <option th:each="patient : ${patients}" th:value="${patient.getId()}" th:selected="${patient.getId() == appointment.getPatientId()}" th:text="${patient.toString()}"></option>
                                 </select>
+                                <small class="form-text text-muted" th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}"></small>
                             </td>
                             <td>
-                                <select class="form-control" name="doctor_id" id="doctors">
+                                <select class="form-control" name="doctorId" id="doctorId">
                                     <option value="" th:text="#{select_doctor}">...</option>
-                                    <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() eq appointment.getDoctorId()}" th:text="${doctor.toString()}"></option>
+                                    <option th:each="doctor : ${doctors}" th:value="${doctor.getId()}" th:selected="${doctor.getId() == appointment.getDoctorId()}" th:text="${doctor.toString()}"></option>
                                 </select>
+                                <small class="form-text text-muted" th:if="${#fields.hasErrors('doctorId')}" th:errors="*{doctorId}"></small>
                             </td>
                             <td>
-                                <select class="form-control" name="diagnosis_id" id="diagnosises">
+                                <select class="form-control" name="diagnosisId" id="diagnosisId">
                                     <option value="" th:text="#{select_diagnosis}">...</option>
-                                    <option th:each="diagnosis : ${diagnosises}" th:value="${diagnosis.getId()}" th:selected="${diagnosis.getId() eq appointment.getDiagnosisId()}" th:text="${diagnosis.toString()}"></option>
+                                    <option th:each="diagnosis : ${diagnosises}" th:value="${diagnosis.getId()}" th:selected="${diagnosis.getId() == appointment.getDiagnosisId()}" th:text="${diagnosis.toString()}"></option>
                                 </select>
+                                <small class="form-text text-muted" th:if="${#fields.hasErrors('diagnosisId')}" th:errors="*{diagnosisId}"></small>
                             </td>
                         </tr>
                     </table>

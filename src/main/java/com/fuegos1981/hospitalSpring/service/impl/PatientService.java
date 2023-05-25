@@ -6,7 +6,6 @@ import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.PatientRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
 import org.springframework.stereotype.Service;
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -19,7 +18,7 @@ public class PatientService implements GlobalService<Patient> {
     }
 
     @Override
-    public Patient readById(Integer id) throws DBException, SQLException {
+    public Patient readById(Integer id){
         if (id == null)
             return null;
         else
@@ -27,14 +26,14 @@ public class PatientService implements GlobalService<Patient> {
     }
 
     @Override
-    public Patient create(Patient patient) throws DBException {
+    public Patient create(Patient patient){
 
         return patientRepository.save(patient);
 
     }
 
     @Override
-    public Patient update(Patient patient) throws DBException{
+    public Patient update(Patient patient){
 
         return patientRepository.save(patient);
     }
@@ -45,7 +44,7 @@ public class PatientService implements GlobalService<Patient> {
     }
 
     @Override
-    public List<Patient> getAll(QueryRedactor qr) throws DBException, SQLException {
+    public List<Patient> getAll(QueryRedactor qr){
        return patientRepository.findAll(qr, Patient.class);
     }
 
@@ -54,7 +53,7 @@ public class PatientService implements GlobalService<Patient> {
     }
 
     @Override
-    public List<Patient> getAll() throws DBException, SQLException {
+    public List<Patient> getAll(){
         return patientRepository.findAll();
     }
 

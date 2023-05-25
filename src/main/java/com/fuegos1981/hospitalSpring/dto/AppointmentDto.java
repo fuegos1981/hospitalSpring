@@ -1,5 +1,6 @@
 package com.fuegos1981.hospitalSpring.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,11 +11,15 @@ import java.util.Date;
 @Getter
 @Setter
 public class AppointmentDto {
-    private int id;
+    private Integer id;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateCreate;
+    @NotNull
     private Integer diagnosisId;
+    @NotNull
     private Integer patientId;
+    @NotNull
     private Integer doctorId;
     private String diagnosisName;
     private String patientName;

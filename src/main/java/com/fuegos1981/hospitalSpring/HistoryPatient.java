@@ -19,7 +19,6 @@ import org.springframework.context.MessageSource;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.*;
 
@@ -28,15 +27,13 @@ public class HistoryPatient {
     private AppointmentService appointmentService;
     private MessageSource messageSource;
 
-    public HistoryPatient() {
-    }
 
     public HistoryPatient(AppointmentService appointmentService, MessageSource messageSource) {
         this.appointmentService = appointmentService;
         this.messageSource = messageSource;
     }
 
-    public void getHistoryPatient(Patient patient, File file, Locale locale) throws SQLException {
+    public void getHistoryPatient(Patient patient, File file, Locale locale){
         PDDocument document = new PDDocument();
         PDPage page = new PDPage();
         document.addPage(page);
@@ -81,7 +78,7 @@ public class HistoryPatient {
             logger.error(e.getMessage());
         }
     }
-    private  void getTable(PDPageContentStream contentStream, PDPage page, Patient patient,PDFont font, Locale locale) throws IOException, SQLException {
+    private  void getTable(PDPageContentStream contentStream, PDPage page, Patient patient,PDFont font, Locale locale) throws IOException{
         Map<String,Object> selection = new HashMap<>();
         selection.put("patient.id",patient.getId());
         List<AppointmentDto> list =appointmentService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_APPOINTMENTS,selection, SortRule.DATE_CREATE_DESC, null));

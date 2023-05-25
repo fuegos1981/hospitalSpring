@@ -13,8 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
-
 @Controller
 @RequestMapping("/hospitalSpring/doctors")
 public class DoctorController {
@@ -27,7 +25,7 @@ public class DoctorController {
         this.categoryService = categoryService;
     }
     @GetMapping("/create")
-    public String create(Model model) throws SQLException {
+    public String create(Model model){
         Doctor doctor =new Doctor();
         doctor.setRole(Role.NURSE);
         logger.info("gggggg");
@@ -39,7 +37,8 @@ public class DoctorController {
 
     @PostMapping("/create")
     public String create(Model model,
-                         @Validated @ModelAttribute("doctor") Doctor doctor, BindingResult result) throws DBException {
+                         @Validated @ModelAttribute("doctor") Doctor doctor,
+                         BindingResult result){
         if (result.hasErrors()) {
             model.addAttribute("roles", Role.values());
             return "edit-doctor";
@@ -49,7 +48,7 @@ public class DoctorController {
     }
 
     @GetMapping("/update/{doctor_id}")
-    public String update(@PathVariable("doctor_id") int patientId, Model model) throws DBException, SQLException {
+    public String update(@PathVariable("doctor_id") int patientId, Model model){
         Doctor doctor = doctorService.readById(patientId);
         model.addAttribute("doctor", doctor);
         model.addAttribute("roles", Role.values());
@@ -57,8 +56,9 @@ public class DoctorController {
     }
 
     @PostMapping("/update/{doctor_id}")
-    public String update(@PathVariable("doctor_id") int doctorId, Model model,
-                         @Validated @ModelAttribute("doctor")Doctor doctor, BindingResult result) throws DBException {
+    public String update(Model model,
+                         @Validated @ModelAttribute("doctor")Doctor doctor,
+                         BindingResult result) throws DBException {
         if (result.hasErrors()) {
             model.addAttribute("roles", Role.values());
             return "edit-doctor";

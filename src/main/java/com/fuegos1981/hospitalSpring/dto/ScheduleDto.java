@@ -1,5 +1,6 @@
 package com.fuegos1981.hospitalSpring.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -10,12 +11,14 @@ import java.util.Date;
 @Getter
 @Setter
 public class ScheduleDto {
-    private int id;
+    private Integer id;
+    @NotNull
     private Integer doctorId;
+    @NotNull
     private Integer patientId;
     private String doctorName;
     private String patientName;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date dateVisit;
 
 
@@ -29,7 +32,7 @@ public class ScheduleDto {
     public String getDateVisitString(){
         String dateVisitString ="";
         if (dateVisit!=null){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
             dateVisitString = sdf.format(dateVisit);
 
         }

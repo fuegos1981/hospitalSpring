@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(name = "last_name", nullable = false)

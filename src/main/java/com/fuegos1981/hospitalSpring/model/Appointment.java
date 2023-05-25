@@ -13,7 +13,7 @@ import java.util.Date;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "date_create", nullable = false)
     private Date dateCreate;
     @ManyToOne

@@ -13,7 +13,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import java.util.Locale;
 
 @Configuration
-public class MyBeansConfig {
+public class MyBeansConfig{
+
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
@@ -49,4 +50,7 @@ public class MyBeansConfig {
         return bean;
     }
 
+
 }
+
+

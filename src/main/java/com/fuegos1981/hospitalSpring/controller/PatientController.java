@@ -22,9 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Locale;
@@ -50,7 +47,6 @@ public class PatientController {
     public String create(Model model) {
         Patient patient =new Patient();
         patient.setGender(Gender.MALE);
-        logger.info("gggggg");
         model.addAttribute("patient", patient);
         model.addAttribute("genders", Gender.values());
         return "edit-patient";
@@ -58,9 +54,11 @@ public class PatientController {
 
     @PostMapping("/create")
     public String create(Model model,
-                         @Validated @ModelAttribute("patient") Patient patient, BindingResult result) throws DBException, SQLException {
+                         @Validated @ModelAttribute("patient") Patient patient,
+                         @RequestParam(required = false, value="submit") String  submit,
+                         BindingResult result) throws DBException, SQLException {
 
-        if (result.hasErrors()) {
+        if (result.hasErrors()||submit==null) {
             model.addAttribute("genders", Gender.values());
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!create post patient");
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
@@ -79,9 +77,12 @@ public class PatientController {
     }
 
     @PostMapping("/update/{patient_id}")
-    public String update(@PathVariable("patient_id") int patientId, Model model,
-                         @Validated @ModelAttribute("patient")Patient patient, BindingResult result) throws DBException {
-        if (result.hasErrors()) {
+    public String update(@PathVariable("patient_id") Integer patientId,
+                         @RequestParam(required = false, value="submit") String  submit,
+                         Model model,
+                         @Validated @ModelAttribute("patient")Patient patient,
+                         BindingResult result) throws DBException {
+        if (result.hasErrors()||submit==null) {
             model.addAttribute("genders", Gender.values());
             return "edit-patient";
         }
@@ -98,28 +99,18 @@ public class PatientController {
         model.addAttribute("maxCountOnPage", ControllerUtils.MAX_COUNT_ON_PAGE);
         Map<String,Object> selection = new HashMap<>();
         selection.put("patient.id",patientId);
-        int[]  limit =ControllerUtils.setMasForPagination(model,allParams, scheduleService.getSize((QueryRedactor.getRedactor(MainQuery.GET_ALL_SCHEDULES,selection))), "schedule");
-        model.addAttribute("schedules",scheduleService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_SCHEDULES, selection, SortRule.VISIT_TIME_DESC,limit)));
-        String pagText = new PaginationTag("schedule",
-                (Integer) model.getAttribute("current_page_schedule"),
-                (Integer) model.getAttribute("count_page_schedule")
-        ).doTag();
-        logger.info("pg_schedule:"+pagText);
-        model.addAttribute("pg_schedule",pagText);
 
-        limit =ControllerUtils.setMasForPagination(model,allParams, appointmentService.getSize((QueryRedactor.getRedactor(MainQuery.GET_ALL_APPOINTMENTS,selection))), "appointment");
-        model.addAttribute("appointments",appointmentService.getAll(QueryRedactor.getRedactor(MainQuery.GET_ALL_APPOINTMENTS, selection, SortRule.DATE_CREATE_DESC,limit)));
-        model.addAttribute("pg_appointment",new PaginationTag("appointment",
-                (Integer) model.getAttribute("current_page_appointment"),
-                (Integer) model.getAttribute("count_page_appointment")
-        ).doTag());
+        ControllerUtils.fillSchedules(model,allParams,selection, scheduleService);
+        ControllerUtils.fillAppointments(model,allParams,selection, appointmentService);
 
         return "patient-info";
     }
 
     @GetMapping("/download/{patient_id}")
     @ResponseBody
-    public FileSystemResource download(@PathVariable("patient_id") int patientId, HttpServletResponse resp, Locale locale) throws DBException, SQLException {
+    public FileSystemResource download(@PathVariable("patient_id") Integer patientId,
+                                       HttpServletResponse resp,
+                                       Locale locale) throws DBException, SQLException {
         Patient patient = patientService.readById(patientId);
         ClassLoader classLoader = HistoryPatient.class.getClassLoader();
         File file = new File(classLoader.getResource("pdf/info.pdf").getFile());

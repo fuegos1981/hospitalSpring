@@ -37,7 +37,7 @@
                 <div class="table-responsive col-md-6">
                     <div class="form-group">
                         <br>
-                        <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create?patient_id=${patient.getId()}|}" th:text="#{add_visit}"></a>
+                        <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create?command=patient_info&patient_id=${patient.getId()}|}" th:text="#{add_visit}"></a>
                     </div>
                     <table id = "AllSchedule" class="table table-bordered table-hover table-striped">
                         <tr>
@@ -51,7 +51,7 @@
                                 <td th:text="${status.count+maxCountOnPage*(current_page_schedule-1)}"></td>
                                 <td th:text="${schedule.getDoctorName()}"></td>
                                 <td th:text="${schedule.getDateVisitString()}"></td>
-                                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}?patient_id=${schedule.getPatientId()}|}" th:text="#{edit}"/></td>
+                                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}?command=patient_info&patient_id=${patient.getId()}|}" th:text="#{edit}"/></td>
                                 <td><a th:href="@{|/hospitalSpring/schedules/delete/${schedule.getId()}|}" th:text="#{delete}"/></td>
                             </tr>
                     </table>
@@ -60,7 +60,7 @@
                 <div class="table-responsive  col-md-6">
                     <div class="form-group">
                         <br>
-                        <a class="btn btn-info btn-md" href="/hospital/appointments/create" th:text="#{create_appointment}"></a>
+                        <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/appointments/create?command=patient_info&patient_id=${patient.getId()}|}" th:text="#{create_appointment}"></a>
                     </div>
                     <table id = "AllAppointments" class="table table-bordered table-hover table-striped">
                         <tr>
@@ -78,7 +78,7 @@
                                 <td th:text="${appointment.getDoctorName()}"></td>
                                 <td th:text="${appointment.getCategoryName()}"></td>
                                 <td th:text="${appointment.getDiagnosisName()}"></td>
-                                <td><a th:href="@{|/hospitalSpring/appointments/update/${appointment.getId()}|}" th:text="#{edit}"/></td>
+                                <td><a th:href="@{|/hospitalSpring/appointments/update/${appointment.getId()}?command=patient_info&patient_id=${patient.getId()}|}" th:text="#{edit}"/></td>
                             </tr>
                     </table>
                     <div data-th-utext="*{pg_appointment}"></div>

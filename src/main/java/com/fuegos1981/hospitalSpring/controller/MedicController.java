@@ -1,6 +1,5 @@
 package com.fuegos1981.hospitalSpring.controller;
 
-import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.service.impl.AppointmentService;
 import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
 import com.fuegos1981.hospitalSpring.service.impl.PatientService;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -28,37 +27,16 @@ public class MedicController {
 
     }
 
-    @GetMapping(value="/hospitalSpring/medic/{doctor_id}")
-    public String medic(@RequestParam Map<String,String> allParams, Model model) throws DBException, SQLException {
+    @RequestMapping(value="/hospitalSpring/medic/{doctor_id}")
+    public String med(@PathVariable("doctor_id") Integer doctorId,
+                      @RequestParam Map<String,String> allParams,
+                      Model model){
         model.addAttribute("patients",patientService.getAll());
         model.addAttribute("doctors",doctorService.getAll());
-
-        model.addAttribute("schedules",scheduleService.getAll());
-        model.addAttribute("pg_schedule",new PaginationTag("schedule",2,5).doTag());
-        model.addAttribute("current_page_schedule",1);
-
-        model.addAttribute("appointments",appointmentService.getAll());
-        model.addAttribute("pg_appointment",new PaginationTag("appointment",3,6).doTag());
-        model.addAttribute("current_page_appointment",1);
-        //allParams.keySet().forEach(x-> logger.info("x="+x+"v="+allParams.get(x)));
-        //logger.info(pag_d);
-        model.addAttribute("maxCountOnPage",10);
-
-        return "medic";
-    }
-
-    @PostMapping(value="/hospitalSpring/medic/{doctor_id}")
-    public String med(@RequestParam Map<String,String> allParams, Model model) throws DBException, SQLException {
-        model.addAttribute("patients",patientService.getAll());
-        model.addAttribute("doctors",doctorService.getAll());
-
-        model.addAttribute("schedules",scheduleService.getAll());
-        model.addAttribute("pg_schedule",new PaginationTag("schedule",2,5).doTag());
-        model.addAttribute("current_page_schedule",1);
-
-        model.addAttribute("appointments",appointmentService.getAll());
-        model.addAttribute("pg_appointment",new PaginationTag("appointment",3,6).doTag());
-        model.addAttribute("current_page_appointment",1);
+        Map<String,Object> selection = new HashMap<>();
+        selection.put("doctor.id",doctorId);
+        ControllerUtils.fillSchedules(model,allParams,selection, scheduleService);
+        ControllerUtils.fillAppointments(model,allParams,selection, appointmentService);
         //allParams.keySet().forEach(x-> logger.info("x="+x+"v="+allParams.get(x)));
         //logger.info(pag_d);
         model.addAttribute("maxCountOnPage",10);

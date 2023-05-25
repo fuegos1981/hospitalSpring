@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Diagnosis implements SimpleModel{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")

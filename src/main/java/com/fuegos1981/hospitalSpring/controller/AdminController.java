@@ -1,6 +1,5 @@
 package com.fuegos1981.hospitalSpring.controller;
 
-import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.repository.MainQuery;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.SortRule;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +34,7 @@ public class AdminController {
     }
 
     @RequestMapping(value="/hospitalSpring/admin", method= RequestMethod.GET)
-    public String admin(@RequestParam Map<String,String> allParams, Model model) throws DBException, SQLException {
+    public String admin(@RequestParam Map<String,String> allParams, Model model){
         fillPatients(allParams, model);
         fillDoctors(allParams, model);
 
@@ -46,7 +44,7 @@ public class AdminController {
         return "admin";
     }
 
-    private void fillDoctors(Map<String,String> allParams, Model model) throws SQLException {
+    private void fillDoctors(Map<String,String> allParams, Model model){
         model.addAttribute("categories",categoryService.getAll());
         Integer categoryId = ControllerUtils.parseID(model,allParams,"category_id");
         Map<String,Object> selection = new HashMap<>();
@@ -65,7 +63,7 @@ public class AdminController {
         ).doTag());
     }
 
-    private void fillPatients(Map<String,String> allParams, Model model) throws DBException, SQLException {
+    private void fillPatients(Map<String,String> allParams, Model model){
         String sortPatient = allParams.get(SORT_PATIENT);
         sortPatient=(sortPatient==null)?SortRule.NAME_ASC.toString():sortPatient;
         model.addAttribute(SORT_PATIENT,sortPatient);
