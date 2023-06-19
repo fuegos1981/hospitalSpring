@@ -1,6 +1,5 @@
 package com.fuegos1981.hospitalSpring.controller;
 
-import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Doctor;
 import com.fuegos1981.hospitalSpring.model.Role;
 import com.fuegos1981.hospitalSpring.service.impl.CategoryService;
@@ -28,19 +27,18 @@ public class DoctorController {
     public String create(Model model){
         Doctor doctor =new Doctor();
         doctor.setRole(Role.NURSE);
-        logger.info("gggggg");
         model.addAttribute("doctor", doctor);
-        model.addAttribute("categories", categoryService.getAll());
-        model.addAttribute("roles", Role.values());
+        fillModel(model);
         return "edit-doctor";
     }
 
     @PostMapping("/create")
-    public String create(Model model,
+    public String create(@RequestParam(required = false, value="submit") String  submit,
+                         Model model,
                          @Validated @ModelAttribute("doctor") Doctor doctor,
                          BindingResult result){
-        if (result.hasErrors()) {
-            model.addAttribute("roles", Role.values());
+        if (result.hasErrors()||submit==null) {
+            fillModel(model);
             return "edit-doctor";
         }
         doctorService.create(doctor);
@@ -48,22 +46,30 @@ public class DoctorController {
     }
 
     @GetMapping("/update/{doctor_id}")
-    public String update(@PathVariable("doctor_id") int patientId, Model model){
-        Doctor doctor = doctorService.readById(patientId);
+    public String update(@PathVariable("doctor_id") int doctorId, Model model){
+        Doctor doctor = doctorService.readById(doctorId);
         model.addAttribute("doctor", doctor);
-        model.addAttribute("roles", Role.values());
+        //model.addAttribute("category", doctor.getCategory());
+        fillModel(model);
         return "edit-doctor";
     }
 
     @PostMapping("/update/{doctor_id}")
-    public String update(Model model,
+    public String update(@RequestParam(required = false, value="submit") String  submit,
+                         Model model,
                          @Validated @ModelAttribute("doctor")Doctor doctor,
-                         BindingResult result) throws DBException {
-        if (result.hasErrors()) {
-            model.addAttribute("roles", Role.values());
+                         BindingResult result){
+        if (result.hasErrors()||submit==null) {
+            fillModel(model);
             return "edit-doctor";
         }
+       // doctor.setCategory(category);
         doctorService.update(doctor);
         return "redirect:/hospitalSpring/admin";
+    }
+
+    private void fillModel(Model model){
+        model.addAttribute("categories", categoryService.getAll());
+        model.addAttribute("roles", Role.values());
     }
 }

@@ -1,6 +1,7 @@
 package com.fuegos1981.hospitalSpring.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +22,7 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
+    @FutureOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @Column(name = "visit_time", nullable = false)
     private Date dateVisit;

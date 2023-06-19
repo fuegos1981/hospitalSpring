@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <div th:fragment="menu">
-<div class="form-group">
-    <button type="submit" name="language"class="btn btn-info btn-md" value ="en" th:text="#{en}"></button>
-    <button type="submit" name="language"class="btn btn-info btn-md" value ="ua" th:text="#{ua}"></button>
-    <!--
-    <span th:if="${role.toString() eq ''}">
-
-        <span th:if="${role.toString() eq 'ADMIN'}">
-            <a class="btn btn-info btn-md" href="/hospital/admin?command=admin">th:text="#{main}"</a>
+    <div class="form-group">
+        <button type="submit" name="language"class="btn btn-info btn-md" value ="en" th:text="#{en}"></button>
+        <button type="submit" name="language"class="btn btn-info btn-md" value ="ua" th:text="#{ua}"></button>
+        <span sec:authorize="isAuthenticated()">
+            <span sec:authorize="hasRole('ADMIN')"><a class="btn btn-info btn-md" href="/hospitalSpring/admin?command=admin" th:text="#{main}"></a></span>
+            <span sec:authorize="hasRole('DOCTOR')||hasRole('NURSE')"><a class="btn btn-info btn-md" href="/hospitalSpring/medic?command=medic&doctor_id=${user_id}" th:text="#{main}"></a></span>
+            <a class="btn btn-info btn-md" href="/hospitalSpring?logout=true" th:text="#{logout}"></a>
+            <span sec:authentication="name"></span>
         </span>
-        <span th:if="${role.toString() eq 'DOCTOR'||role.toString() eq 'NURSE'}">
-            <a class="btn btn-info btn-md" href="/hospital/medic?command=medic&doctor_id=${user_id}">th:text="#{main}"></a>
-        </span>
-
-        <a class="btn btn-info btn-md" href="/hospital/login?command=logout">th:text="#{logout}" th:text='${user_name}</a>
-    </span>
-    -->
-</div>
+    </div>
 </div>
 </html>

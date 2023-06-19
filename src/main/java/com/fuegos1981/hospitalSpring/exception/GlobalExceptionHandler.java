@@ -18,27 +18,31 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DBException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView nullEntityReferenceExceptionHandler(HttpServletRequest request, DBException exception) {
+        logger.info("_________nullEntityReferenceExceptionHandler_"+exception.getMessage());
         return getModelAndView(request, HttpStatus.BAD_REQUEST, exception);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(value= HttpStatus.NOT_FOUND)
     public ModelAndView entityNotFoundExceptionHandler(HttpServletRequest request, EntityNotFoundException exception) {
+        logger.info("_________________entityNotFoundExceptionHandler"+exception.getMessage());
         return getModelAndView(request, HttpStatus.NOT_FOUND, exception);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(value= HttpStatus.FORBIDDEN)
     public ModelAndView accessDeniedExceptionHandler(HttpServletRequest request, AccessDeniedException exception) {
+        logger.info("_________________accessDeniedExceptionHandler"+exception.getMessage());
         return getModelAndView(request, HttpStatus.FORBIDDEN, exception);
     }
-    /*
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView internalServerErrorHandler(HttpServletRequest request, Exception exception) {
+        logger.info("_________________internalServerErrorHandler"+exception.getMessage());
         return getModelAndView(request, HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
-*/
+
     private ModelAndView getModelAndView(HttpServletRequest request, HttpStatus httpStatus, Exception exception) {
         logger.error("Exception raised = {} :: URL = {}", exception.getMessage(), request.getRequestURL());
         ModelAndView modelAndView = new ModelAndView("error");

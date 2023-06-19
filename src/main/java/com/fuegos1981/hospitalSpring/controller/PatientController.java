@@ -4,9 +4,6 @@ import com.fuegos1981.hospitalSpring.HistoryPatient;
 import com.fuegos1981.hospitalSpring.exception.DBException;
 import com.fuegos1981.hospitalSpring.model.Gender;
 import com.fuegos1981.hospitalSpring.model.Patient;
-import com.fuegos1981.hospitalSpring.repository.MainQuery;
-import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
-import com.fuegos1981.hospitalSpring.repository.SortRule;
 import com.fuegos1981.hospitalSpring.service.impl.AppointmentService;
 import com.fuegos1981.hospitalSpring.service.impl.PatientService;
 import com.fuegos1981.hospitalSpring.service.impl.ScheduleService;
@@ -22,7 +19,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -36,7 +32,8 @@ public class PatientController {
     private final AppointmentService appointmentService;
     private MessageSource messageSource;
     private static Logger logger = LoggerFactory.getLogger(PatientController.class);
-    public PatientController(PatientService patientService, ScheduleService scheduleService, AppointmentService appointmentService, MessageSource messageSource) {
+    public PatientController(PatientService patientService, ScheduleService scheduleService,
+                             AppointmentService appointmentService, MessageSource messageSource) {
         this.patientService = patientService;
         this.scheduleService = scheduleService;
         this.appointmentService = appointmentService;
@@ -56,9 +53,9 @@ public class PatientController {
     public String create(Model model,
                          @Validated @ModelAttribute("patient") Patient patient,
                          @RequestParam(required = false, value="submit") String  submit,
-                         BindingResult result) throws DBException, SQLException {
+                         BindingResult result){
 
-        if (result.hasErrors()||submit==null) {
+        if (result.hasErrors()||submit!=null) {
             model.addAttribute("genders", Gender.values());
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!create post patient");
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
@@ -69,7 +66,7 @@ public class PatientController {
     }
 
     @GetMapping("/update/{patient_id}")
-    public String update(@PathVariable("patient_id") int patientId,Model model) throws DBException, SQLException {
+    public String update(@PathVariable("patient_id") int patientId,Model model){
         Patient patient = patientService.readById(patientId);
         model.addAttribute("patient", patient);
         model.addAttribute("genders", Gender.values());
@@ -93,7 +90,7 @@ public class PatientController {
     @RequestMapping("/read/{patient_id}")
     public String read(@PathVariable("patient_id") int patientId,
                        @RequestParam Map<String,String> allParams,
-                       Model model) throws DBException, SQLException {
+                       Model model){
         Patient patient = patientService.readById(patientId);
         model.addAttribute("patient", patient);
         model.addAttribute("maxCountOnPage", ControllerUtils.MAX_COUNT_ON_PAGE);
@@ -110,7 +107,7 @@ public class PatientController {
     @ResponseBody
     public FileSystemResource download(@PathVariable("patient_id") Integer patientId,
                                        HttpServletResponse resp,
-                                       Locale locale) throws DBException, SQLException {
+                                       Locale locale){
         Patient patient = patientService.readById(patientId);
         ClassLoader classLoader = HistoryPatient.class.getClassLoader();
         File file = new File(classLoader.getResource("pdf/info.pdf").getFile());

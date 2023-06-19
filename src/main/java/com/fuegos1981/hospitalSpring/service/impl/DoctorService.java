@@ -4,6 +4,8 @@ import com.fuegos1981.hospitalSpring.model.Doctor;
 import com.fuegos1981.hospitalSpring.repository.QueryRedactor;
 import com.fuegos1981.hospitalSpring.repository.elements.DoctorRepository;
 import com.fuegos1981.hospitalSpring.service.GlobalService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +13,8 @@ import java.util.List;
 @Service
 public class DoctorService implements GlobalService<Doctor> {
     private DoctorRepository doctorRepository;
-
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     private DoctorService(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
@@ -36,11 +39,13 @@ public class DoctorService implements GlobalService<Doctor> {
 
     @Override
     public Doctor create(Doctor doctor){
+        doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         return doctorRepository.save(doctor);
     }
 
     @Override
     public Doctor update(Doctor doctor){
+        doctor.setPassword(passwordEncoder.encode(doctor.getPassword()));
         return doctorRepository.save(doctor);
     }
 

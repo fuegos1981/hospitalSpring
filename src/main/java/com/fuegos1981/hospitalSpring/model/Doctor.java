@@ -1,6 +1,8 @@
 package com.fuegos1981.hospitalSpring.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,13 +25,13 @@ public class Doctor {
     private String firstName;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @NotNull
     private Category category;
-    @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+    @Pattern(regexp = "[A-ZА-Я][A-Za-zА-Яа-я]+",
+            message = "Must start with a capital letter")
     @Column(name = "login", nullable = false)
     private String login;
-    @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+    //@Min(value = 3, message = "Should not be less than 3")
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "role")

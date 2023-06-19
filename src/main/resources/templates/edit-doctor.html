@@ -9,8 +9,7 @@
     <link th:href="@{/styles/main.css}" rel="stylesheet"/>
 </head>
 <body>
-<form id="base-form" class="form" action="/hospitalSpring/doctors/${command}" th:object="${doctor}" method="post">
-    <input type="hidden" name="command" value="edit_doctor"/>
+<form id="base-form" class="form" th:object="${doctor}" method="post">
     <input type="hidden" name="id" th:value="${doctor.getId()}"/>
     <div th:insert="header::menu"></div>
     <div id="base2">
@@ -25,24 +24,29 @@
                         </h3>
                         <div class="form-group">
                             <label class="text-info" th:text="#{last_name}">:</label><br>
-                            <input type="text" name="last_name" id="last_name" class="form-control"
+                            <input type="text" name="lastName" id="lastName" class="form-control"
                                    th:value="${doctor.getLastName()}">
+                            <small class="form-text text-muted" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
                             <label class="text-info" th:text="#{first_name}"> :</label><br>
-                            <input type="text" name="first_name" id="first_name" class="form-control"
+                            <input type="text" name="firstName" id="firstName" class="form-control"
                                    th:value="${doctor.getFirstName()}">
+                            <small class="form-text text-muted" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
                             <label for="login" class="text-info" th:text="#{login}">:</label><br>
                             <input type="login" name="login" id="login" class="form-control"
                                    th:value="${doctor.getLogin()}"/>
+                            <small class="form-text text-muted" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></small>
                             <label for="password" class="text-info" th:text="#{password}">:</label><br>
                             <input type="password" name="password" id="password" class="form-control"
                                    value="${password}"/>
+                            <small class="form-text text-muted" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
                             <br/>
                             <input th:each="role : ${roles}" th:value="${role}" type="radio" name="role"  th:checked="${doctor.getRole() ==role}" th:text="#{${role}}"/>
                         </div>
-                        <select class="form-control" name="category_id" id="categories">
+                        <select class="form-control" name="category" id="categories">
                             <option value="" th:text="#{select_category}">...</option>
-                            <option th:each="category : ${categories}" th:value="${category.getId()}" th:selected="${doctor.getCategory()!=null&&category.getId() eq doctor.getCategory().getId()}" th:text="${category.getName()}"></option>
+                            <option th:each="category : ${categories}" th:value="${category.getId()}" th:selected="${doctor.getCategory()!=null&&category.getId() == doctor.getCategory().getId()}" th:text="${category.getName()}"></option>
                         </select>
+                        <small class="form-text text-muted" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></small>
                         <div class="form-group">
                             <br/>
                             <input type="submit" name="submit" class="btn btn-info btn-md" th:value="#{save}"/>

@@ -1,6 +1,7 @@
 package com.fuegos1981.hospitalSpring.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,21 +22,22 @@ public class Patient implements Serializable {
     private Integer id;
 
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
-    @Column(name = "last_name")
+            message = "ValidErrorName")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+            message = "ValidErrorName")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @PastOrPresent
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthday", nullable = false)
     private Date birthday;
 
     @Pattern(regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$",
-            message = "Must use rule email")
+            message = "ValidErrorEMAIL")
     @Column(name = "email")
     private String email;
 

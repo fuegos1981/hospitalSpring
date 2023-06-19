@@ -9,7 +9,7 @@
         <link th:href="@{/styles/main.css}" rel="stylesheet" />
     </head>
     <body>
-        <form id="base-form" class="form" th:action="@{/hospitalSpring/login}" method="post">
+        <form id="base-form" class="form" method="post">
             <div th:insert="header::menu"></div>
             <div id="base">
                 <h3 class="text-center text-white pt-5" th:text="#{hospital}"></h3>
@@ -17,7 +17,6 @@
                     <div id="base-row" class="row justify-content-center align-items-center">
                         <div id="base-column" class="col-md-6">
                             <div id="base-box" class="col-md-12">
-                                <input type="hidden" name="command" value="login"/>
                                 <br>
                                 <h3 class="text-center text-info" th:text="#{authentication}"></h3>
                                 <div class="form-group">
