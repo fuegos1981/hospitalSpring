@@ -33,6 +33,7 @@ public class MedicController {
                       Model model){
         model.addAttribute("patients",patientService.getAll());
         model.addAttribute("doctors",doctorService.getAll());
+        model.addAttribute("doctor",doctorService.readById(doctorId));
         Map<String,Object> selection = new HashMap<>();
         selection.put("doctor.id",doctorId);
         ControllerUtils.fillSchedules(model,allParams,selection, scheduleService);

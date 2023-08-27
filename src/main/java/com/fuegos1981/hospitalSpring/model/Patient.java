@@ -22,12 +22,12 @@ public class Patient implements Serializable {
     private Integer id;
 
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "ValidErrorName")
+            message = "{ValidErrorName}")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "ValidErrorName")
+            message = "{ValidErrorName}")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 

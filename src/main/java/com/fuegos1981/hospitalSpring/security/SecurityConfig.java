@@ -34,7 +34,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider()).authorizeHttpRequests().requestMatchers("/hospitalSpring", "/hospitalSpring/error").permitAll()
-                .requestMatchers("/hospitalSpring/default","/hospitalSpring/medic/**").hasAnyRole("ADMIN","DOCTOR","NURSE")
+                .requestMatchers("/hospitalSpring/default","/hospitalSpring/medic","/hospitalSpring/medic/**").hasAnyRole("ADMIN","DOCTOR","NURSE")
                 .requestMatchers("/hospitalSpring/schedules/**","/hospitalSpring/appointments/**").fullyAuthenticated()
                 .requestMatchers("/hospitalSpring/**").hasAnyRole("ADMIN")
                 .and()

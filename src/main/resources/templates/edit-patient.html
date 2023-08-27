@@ -25,7 +25,8 @@
                                     <input type="text" name="lastName" id="lastName" class="form-control" th:value="${patient.getLastName()}"/>
                                     <small class="form-text text-muted" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
                                     <label class="text-info" th:text="#{first_name}">:</label><br>
-                                    <input type="text" name="firstName" id="firstName" class="form-control" th:value="${patient.getFirstName()}"/>
+                                    <input type="text" name="firstName" id="firstName" class="form-control"
+                                           th:value="${patient.getFirstName()}">
                                     <small class="form-text text-muted" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
                                     <label for="email" class="text-info" th:text="#{Email}">:</label><br>
                                     <input type="email" name="email" id="email" class="form-control" th:value="${patient.getEmail()}"/>

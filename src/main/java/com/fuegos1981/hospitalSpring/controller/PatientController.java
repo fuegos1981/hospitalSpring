@@ -50,15 +50,15 @@ public class PatientController {
     }
 
     @PostMapping("/create")
-    public String create(Model model,
+    public String create(@RequestParam(required = false, value="submit") String  submit,
+                         Model model,
                          @Validated @ModelAttribute("patient") Patient patient,
-                         @RequestParam(required = false, value="submit") String  submit,
                          BindingResult result){
 
-        if (result.hasErrors()||submit!=null) {
+        if (result.hasErrors()||submit==null) {
             model.addAttribute("genders", Gender.values());
             logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!create post patient");
-            logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
+            //logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!"+result.getAllErrors().stream().map(e->e.getDefaultMessage()).collect(Collectors.joining()));
             return "edit-patient";
         }
         patientService.create(patient);

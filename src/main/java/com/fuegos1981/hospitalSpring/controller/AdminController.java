@@ -19,9 +19,9 @@ import java.util.Map;
 
 @Controller
 public class AdminController {
-    private final PatientService patientService;
-    private final DoctorService doctorService;
-    private final CategoryService categoryService;
+    private PatientService patientService;
+    private DoctorService doctorService;
+    private CategoryService categoryService;
     private static Logger logger = LoggerFactory.getLogger(MainController.class);
 
     private final static String SORT_DOCTOR = "sortDoctor";

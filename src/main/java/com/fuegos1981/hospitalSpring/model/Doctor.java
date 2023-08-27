@@ -16,11 +16,11 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+            message = "{ValidErrorName}")
     @Column(name = "last_name", nullable = false)
     private String lastName;
     @Pattern(regexp = "[A-ZА-Я][a-zа-я]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+            message = "{ValidErrorName}")
     @Column(name = "first_name", nullable = false)
     private String firstName;
     @ManyToOne
@@ -28,7 +28,7 @@ public class Doctor {
     @NotNull
     private Category category;
     @Pattern(regexp = "[A-ZА-Я][A-Za-zА-Яа-я]+",
-            message = "Must start with a capital letter")
+            message = "{ValidErrorLogin}")
     @Column(name = "login", nullable = false)
     private String login;
     //@Min(value = 3, message = "Should not be less than 3")

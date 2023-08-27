@@ -48,7 +48,7 @@
         <div class="table-responsive col-md-6">
           <div class="form-group">
             <br>
-            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create?command=medic&current_doctor_id=${doctor.getId()}|}"  th:text="#{add_visit}"></a>
+            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/schedules/create?command=med&current_doctor_id=${doctor.getId()}|}"  th:text="#{add_visit}"></a>
           </div>
           <table id = "AllSchedule" class="table table-bordered table-hover table-striped">
             <tr>
@@ -62,8 +62,8 @@
                 <td th:text="${status.count+maxCountOnPage*(current_page_schedule-1)}"></td>
                 <td th:text="${schedule.getPatientName()}"></td>
                 <td th:text="${schedule.getDateVisitString()}"></td>
-                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}?command=medic&current_doctor_id=${doctor.getId()|}" th:text="#{edit}"/></td>
-                <td><a  th:href="@{|/hospitalSpring/schedules/delete/${schedule.getId()}?command=medic&current_doctor_id=${doctor.getId()|}" th:text="#{delete}"/></td>
+                <td><a th:href="@{|/hospitalSpring/schedules/update/${schedule.getId()}?command=med&current_doctor_id=${doctor.getId()}|}" th:text="#{edit}"/></td>
+                <td><a  th:href="@{|/hospitalSpring/schedules/delete/${schedule.getId()}?command=med&current_doctor_id=${doctor.getId()}|}" th:text="#{delete}"/></td>
               </tr>
 
           </table>
@@ -72,7 +72,7 @@
         <div class="table-responsive  col-md-6">
           <div class="form-group">
             <br>
-            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/appointments/create?command=medic&current_doctor_id=${doctor.getId()|}" th:text="#{create_appointment}"></a>
+            <a class="btn btn-info btn-md" th:href="@{|/hospitalSpring/appointments/create?command=med&current_doctor_id=${doctor.getId()}|}" th:text="#{create_appointment}"></a>
           </div>
           <table id = "AllAppointments" class="table table-bordered table-hover table-striped">
             <tr>

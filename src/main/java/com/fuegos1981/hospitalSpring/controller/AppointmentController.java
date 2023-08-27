@@ -3,34 +3,34 @@ package com.fuegos1981.hospitalSpring.controller;
 import com.fuegos1981.hospitalSpring.dto.AppointmentDto;
 import com.fuegos1981.hospitalSpring.service.impl.AppointmentService;
 import com.fuegos1981.hospitalSpring.service.impl.DiagnosisService;
-import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
 import com.fuegos1981.hospitalSpring.service.impl.PatientService;
+import com.fuegos1981.hospitalSpring.service.impl.DoctorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Map;
 
 @Controller
 @RequestMapping("/hospitalSpring/appointments")
 public class AppointmentController {
-    private final AppointmentService appointmentService;
+    @Autowired
+    private AppointmentService appointmentService;
+    @Autowired
     private PatientService patientService;
+    @Autowired
     private DoctorService doctorService;
+    @Autowired
     private DiagnosisService diagnosisService;
 
     private static Logger logger = LoggerFactory.getLogger(PatientController.class);
-    public AppointmentController(AppointmentService appointmentService,DoctorService doctorService,
-                                 PatientService patientService, DiagnosisService diagnosisService) {
-        this.appointmentService = appointmentService;
-        this.doctorService = doctorService;
-        this.patientService = patientService;
-        this.diagnosisService = diagnosisService;
-    }
+
 
     @GetMapping("/create")
     public String create(Model model,

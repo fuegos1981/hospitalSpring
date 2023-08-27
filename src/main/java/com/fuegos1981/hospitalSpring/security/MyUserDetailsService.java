@@ -21,7 +21,7 @@ import java.util.Map;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
     @Autowired
-    private DoctorService doctorService;
+    public DoctorService doctorService;
 
     private static Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
     @Override
